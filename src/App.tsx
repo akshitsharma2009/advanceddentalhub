@@ -8,6 +8,7 @@ import About from "./pages/About";
 import Services from "./pages/Services";
 import Appointment from "./pages/Appointment";
 import Contact from "./pages/Contact";
+import ToothAssistant from "./pages/ToothAssistant";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/services" element={<Services />} />
           <Route path="/appointment" element={<Appointment />} />
+          <Route path="/tooth-assistant" element={<ToothAssistant />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
