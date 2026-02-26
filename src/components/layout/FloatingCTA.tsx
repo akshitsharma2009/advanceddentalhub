@@ -4,15 +4,14 @@ import { Button } from "@/components/ui/button";
 
 const FloatingCTA = () => {
   return (
-    <Link
-      to="/appointment"
-      className="fixed bottom-24 right-6 z-40 hidden md:block"
-    >
-      <Button size="lg" className="gap-2 shadow-lg animate-pulse-soft">
-        <Calendar className="h-5 w-5" />
-        Book Appointment
+    <div className="fixed bottom-24 right-6 z-40 hidden md:block">
+      <Button asChild size="lg" className="gap-2 shadow-lg animate-pulse-soft">
+        <Link to="/appointment">
+          <Calendar className="h-5 w-5" />
+          Book Appointment
+        </Link>
       </Button>
-    </Link>
+    </div>
   );
 };
 
