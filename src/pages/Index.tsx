@@ -5,6 +5,7 @@ import ServicesPreview from "@/components/home/ServicesPreview";
 import TestimonialsSection from "@/components/home/TestimonialsSection";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import CTASection from "@/components/home/CTASection";
+import ToothAssistantSection from "@/components/home/ToothAssistantSection";
 
 const Index = () => {
   return (
@@ -14,6 +15,7 @@ const Index = () => {
       <ServicesPreview />
       <WhyChooseUs />
       <TestimonialsSection />
+      <ToothAssistantSection />
       <CTASection />
     </Layout>
   );
