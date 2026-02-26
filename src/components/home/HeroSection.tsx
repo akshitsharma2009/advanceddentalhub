@@ -1,103 +1,78 @@
+import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, Shield, Sparkles, Award } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const TeethModel = lazy(() => import("@/components/3d/TeethModel"));
 
 const HeroSection = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-secondary via-background to-accent/30 py-16 md:py-24">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-30">
-        <div className="absolute -right-40 -top-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-      </div>
+    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(210,25%,12%)] via-[hsl(210,25%,16%)] to-[hsl(200,30%,18%)]">
+      {/* Subtle grid overlay */}
+      <div
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "linear-gradient(hsl(174,62%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(174,62%,50%) 1px, transparent 1px)",
+          backgroundSize: "60px 60px",
+        }}
+      />
 
-      <div className="container relative">
-        <div className="grid items-center gap-12 lg:grid-cols-2">
-          <div className="space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
-              <Sparkles className="h-4 w-4" />
-              Welcome to Advanced Dental Hub
-            </div>
-
-            <h1 className="font-display text-4xl font-bold leading-tight text-foreground md:text-5xl lg:text-6xl">
-              Caring for Your Smile with{" "}
-              <span className="text-primary">Precision</span> &{" "}
-              <span className="text-primary">Trust</span>
-            </h1>
-
-            <p className="max-w-lg text-lg text-muted-foreground">
-              Advanced dental care using modern technology and expert hands. 
-              Experience painless treatments in a comfortable, hygienic environment.
+      <div className="container relative flex min-h-[90vh] items-center">
+        <div className="grid w-full items-center gap-8 lg:grid-cols-2">
+          {/* Left — Copy */}
+          <div className="relative z-10 space-y-6">
+            <p className="text-sm font-medium uppercase tracking-[0.25em] text-primary/80">
+              Advanced Dental Hub
             </p>
-
-            <div className="flex flex-col gap-4 sm:flex-row">
-              <Button asChild size="lg" className="gap-2">
-                <Link to="/appointment">
-                  Book Appointment
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
+            <h1 className="font-display text-4xl font-bold leading-[1.1] text-white md:text-5xl lg:text-6xl">
+              Modern precision{" "}
+              <br className="hidden md:block" />
+              dentistry today.
+              <br />
+              <span className="text-primary">A healthier tomorrow.</span>
+            </h1>
+            <p className="max-w-md text-base text-white/60 md:text-lg">
+              Expert dental care using cutting-edge technology and gentle hands.
+              Experience painless treatments in a state-of-the-art environment.
+            </p>
+            <div className="flex flex-wrap gap-4 pt-2">
+              <Button
+                asChild
+                size="lg"
+                className="rounded-full px-8 text-sm font-medium tracking-wide"
+              >
+                <Link to="/about">Our philosophy</Link>
               </Button>
-              <Button asChild variant="outline" size="lg">
-                <Link to="/services">View Treatments</Link>
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="rounded-full border-white/20 bg-transparent px-8 text-sm font-medium tracking-wide text-white hover:bg-white/10 hover:text-white"
+              >
+                <Link to="/appointment">Book appointment</Link>
               </Button>
-            </div>
-
-            <div className="flex flex-wrap gap-6 pt-4">
-              <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <Shield className="h-5 w-5 text-primary" />
-                </div>
-                <span className="text-sm font-medium text-foreground">100% Safe</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10">
-                  <Award className="h-5 w-5 text-primary" />
-                </div>
-                <span className="text-sm font-medium text-foreground">Certified Expert</span>
-              </div>
             </div>
           </div>
 
-          {/* Hero Image Placeholder */}
-          <div className="relative hidden lg:block">
-            <div className="relative aspect-square overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 to-secondary shadow-2xl">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-primary/20">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="1.5"
-                      className="h-12 w-12 text-primary"
-                    >
-                      <path d="M12 2c-1.7 0-3 1.3-3 3v1c0 1.7 1.3 3 3 3s3-1.3 3-3V5c0-1.7-1.3-3-3-3z" />
-                      <path d="M19 8c-.7 0-1.4.2-2 .5.3.5.5 1 .5 1.5 0 1.7-1.3 3-3 3h-5c-1.7 0-3-1.3-3-3 0-.5.2-1 .5-1.5-.6-.3-1.3-.5-2-.5-1.7 0-3 1.3-3 3v7c0 1.7 1.3 3 3 3h14c1.7 0 3-1.3 3-3v-7c0-1.7-1.3-3-3-3z" />
-                    </svg>
-                  </div>
-                  <p className="text-lg font-medium text-primary">Your Smile, Our Priority</p>
+          {/* Right — 3D Model */}
+          <div className="relative flex h-[400px] items-center justify-center md:h-[500px] lg:h-[600px]">
+            {/* Glow behind model */}
+            <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[100px]" />
+            <Suspense
+              fallback={
+                <div className="flex h-full items-center justify-center">
+                  <div className="h-16 w-16 animate-pulse rounded-full border-2 border-primary/40" />
                 </div>
-              </div>
-            </div>
-
-            {/* Floating Badge */}
-            <div className="absolute -bottom-4 -left-4 rounded-2xl bg-card p-4 shadow-xl">
-              <div className="flex items-center gap-3">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-green-100">
-                  <svg className="h-6 w-6 text-green-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20 6L9 17l-5-5" />
-                  </svg>
-                </div>
-                <div>
-                  <p className="text-2xl font-bold text-foreground">15+</p>
-                  <p className="text-sm text-muted-foreground">Years Experience</p>
-                </div>
-              </div>
-            </div>
+              }
+            >
+              <TeethModel />
+            </Suspense>
           </div>
         </div>
       </div>
+
+      {/* Bottom fade */}
+      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };
