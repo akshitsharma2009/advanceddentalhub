@@ -1,15 +1,20 @@
 import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { ArrowRight, Shield, Sparkles } from "lucide-react";
 
 const TeethModel = lazy(() => import("@/components/3d/TeethModel"));
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(210,25%,12%)] via-[hsl(210,25%,16%)] to-[hsl(200,30%,18%)]">
+    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(210,25%,10%)] via-[hsl(210,25%,14%)] to-[hsl(200,30%,16%)]">
+      {/* Ambient glow orbs */}
+      <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-[100px]" />
+
       {/* Subtle grid overlay */}
       <div
-        className="absolute inset-0 opacity-[0.04]"
+        className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
             "linear-gradient(hsl(174,62%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(174,62%,50%) 1px, transparent 1px)",
@@ -20,44 +25,70 @@ const HeroSection = () => {
       <div className="container relative flex min-h-[90vh] items-center">
         <div className="grid w-full items-center gap-8 lg:grid-cols-2">
           {/* Left — Copy */}
-          <div className="relative z-10 space-y-6">
-            <p className="text-sm font-medium uppercase tracking-[0.25em] text-primary/80">
-              Advanced Dental Hub
-            </p>
-            <h1 className="font-display text-4xl font-bold leading-[1.1] text-white md:text-5xl lg:text-6xl">
-              Modern precision{" "}
+          <div className="relative z-10 space-y-8">
+            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+              <Sparkles className="h-4 w-4 text-primary" />
+              <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">
+                Advanced Dental Hub
+              </span>
+            </div>
+
+            <h1 className="font-display text-4xl font-bold leading-[1.08] text-white md:text-5xl lg:text-6xl xl:text-7xl">
+              Your smile,{" "}
               <br className="hidden md:block" />
-              dentistry today.
-              <br />
-              <span className="text-primary">A healthier tomorrow.</span>
+              our{" "}
+              <span className="bg-gradient-to-r from-primary to-teal-light bg-clip-text text-transparent">
+                precision.
+              </span>
             </h1>
-            <p className="max-w-md text-base text-white/60 md:text-lg">
+
+            <p className="max-w-md text-base leading-relaxed text-white/50 md:text-lg">
               Expert dental care using cutting-edge technology and gentle hands.
               Experience painless treatments in a state-of-the-art environment.
             </p>
+
             <div className="flex flex-wrap gap-4 pt-2">
               <Button
                 asChild
                 size="lg"
-                className="rounded-full px-8 text-sm font-medium tracking-wide"
+                className="rounded-full px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/25"
               >
-                <Link to="/about">Our philosophy</Link>
+                <Link to="/appointment">
+                  Book Appointment
+                  <ArrowRight className="ml-1 h-4 w-4" />
+                </Link>
               </Button>
               <Button
                 asChild
                 variant="outline"
                 size="lg"
-                className="rounded-full border-white/20 bg-transparent px-8 text-sm font-medium tracking-wide text-white hover:bg-white/10 hover:text-white"
+                className="rounded-full border-white/15 bg-white/5 px-8 text-sm font-medium tracking-wide text-white backdrop-blur-sm hover:bg-white/10 hover:text-white"
               >
-                <Link to="/appointment">Book appointment</Link>
+                <Link to="/about">Our Philosophy</Link>
               </Button>
+            </div>
+
+            {/* Floating trust badges */}
+            <div className="flex flex-wrap gap-3 pt-4">
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+                <Shield className="h-4 w-4 text-primary" />
+                <span className="text-xs text-white/50">15+ Years Experience</span>
+              </div>
+              <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+                <Sparkles className="h-4 w-4 text-primary" />
+                <span className="text-xs text-white/50">5000+ Happy Patients</span>
+              </div>
             </div>
           </div>
 
           {/* Right — 3D Model */}
           <div className="relative flex h-[400px] items-center justify-center md:h-[500px] lg:h-[600px]">
             {/* Glow behind model */}
-            <div className="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[100px]" />
+            <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[120px]" />
+            
+            {/* Glass frame around model */}
+            <div className="absolute inset-8 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-sm" />
+            
             <Suspense
               fallback={
                 <div className="flex h-full items-center justify-center">
@@ -72,7 +103,7 @@ const HeroSection = () => {
       </div>
 
       {/* Bottom fade */}
-      <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
     </section>
   );
 };

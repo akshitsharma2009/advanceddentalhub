@@ -25,9 +25,12 @@ const testimonials = [
 
 const TestimonialsSection = () => {
   return (
-    <section className="py-16 md:py-20">
-      <div className="container">
+    <section className="floating-section py-16 md:py-24">
+      <div className="container relative z-10">
         <div className="mb-12 text-center">
+          <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">
+            Testimonials
+          </p>
           <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
             What Our Patients Say
           </h2>
@@ -38,10 +41,7 @@ const TestimonialsSection = () => {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="relative rounded-2xl border bg-card p-6 shadow-sm"
-            >
+            <div key={index} className="glass-card group cursor-default">
               <Quote className="absolute right-4 top-4 h-8 w-8 text-primary/10" />
               <div className="mb-4 flex gap-1">
                 {Array.from({ length: testimonial.rating }).map((_, i) => (

@@ -9,10 +9,10 @@ const highlights = [
 
 const ToothAssistantSection = () => {
   return (
-    <section className="py-16 bg-secondary/50 md:py-24">
-      <div className="container">
+    <section className="floating-section bg-muted/20 py-16 md:py-24">
+      <div className="container relative z-10">
         <div className="mx-auto max-w-2xl text-center mb-10">
-          <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-4 py-2 text-sm font-medium text-primary backdrop-blur-sm">
             <Bot className="h-4 w-4" />
             AI-Powered Guidance
           </div>
@@ -26,7 +26,7 @@ const ToothAssistantSection = () => {
             {highlights.map((h) => (
               <div
                 key={h.text}
-                className="flex items-center gap-2 rounded-xl bg-background px-4 py-3 shadow-sm"
+                className="glass-card-static flex items-center gap-2 !rounded-xl !p-3"
               >
                 <h.icon className="h-4 w-4 shrink-0 text-primary" />
                 <span className="text-sm font-medium text-foreground">{h.text}</span>

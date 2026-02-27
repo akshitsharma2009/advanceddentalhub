@@ -3,33 +3,37 @@ import { MapPin, Phone, Mail, Clock, Facebook, Instagram, Twitter } from "lucide
 
 const Footer = () => {
   return (
-    <footer className="border-t bg-muted/30">
-      <div className="container py-12 md:py-16">
+    <footer className="relative overflow-hidden border-t border-border/50 bg-muted/20">
+      {/* Ambient glow */}
+      <div className="absolute -bottom-40 left-1/3 h-60 w-60 rounded-full bg-primary/5 blur-[100px]" />
+
+      <div className="container relative z-10 py-12 md:py-16">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
-                <span className="text-xl font-bold text-primary-foreground">A</span>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
+                <span className="text-xl font-bold text-primary">A</span>
               </div>
               <div className="flex flex-col">
                 <span className="text-lg font-semibold leading-tight text-foreground">Advanced</span>
-                <span className="text-sm leading-tight text-primary">Dental Hub</span>
+                <span className="text-xs leading-tight text-primary uppercase tracking-wider">Dental Hub</span>
               </div>
             </Link>
             <p className="text-sm text-muted-foreground">
               Caring for your smile with precision and trust. Advanced dental care using modern technology and expert hands.
             </p>
-            <div className="flex gap-4">
-              <a href="#" className="text-muted-foreground hover:text-primary" aria-label="Facebook">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary" aria-label="Instagram">
-                <Instagram className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary" aria-label="Twitter">
-                <Twitter className="h-5 w-5" />
-              </a>
+            <div className="flex gap-3">
+              {[Facebook, Instagram, Twitter].map((Icon, i) => (
+                <a
+                  key={i}
+                  href="#"
+                  className="flex h-10 w-10 items-center justify-center rounded-xl border border-border/50 bg-background/50 text-muted-foreground transition-all hover:border-primary/30 hover:text-primary"
+                  aria-label="Social link"
+                >
+                  <Icon className="h-4 w-4" />
+                </a>
+              ))}
             </div>
           </div>
 
@@ -37,21 +41,19 @@ const Footer = () => {
           <div>
             <h3 className="mb-4 font-semibold text-foreground">Quick Links</h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="/" className="text-sm text-muted-foreground hover:text-primary">Home</Link>
-              </li>
-              <li>
-                <Link to="/about" className="text-sm text-muted-foreground hover:text-primary">About Us</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Our Services</Link>
-              </li>
-              <li>
-                <Link to="/appointment" className="text-sm text-muted-foreground hover:text-primary">Book Appointment</Link>
-              </li>
-              <li>
-                <Link to="/contact" className="text-sm text-muted-foreground hover:text-primary">Contact Us</Link>
-              </li>
+              {[
+                { label: "Home", path: "/" },
+                { label: "About Us", path: "/about" },
+                { label: "Our Services", path: "/services" },
+                { label: "Book Appointment", path: "/appointment" },
+                { label: "Contact Us", path: "/contact" },
+              ].map((link) => (
+                <li key={link.path}>
+                  <Link to={link.path} className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -59,21 +61,13 @@ const Footer = () => {
           <div>
             <h3 className="mb-4 font-semibold text-foreground">Our Services</h3>
             <ul className="space-y-2">
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">General Dentistry</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Root Canal Treatment</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Dental Implants</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Cosmetic Dentistry</Link>
-              </li>
-              <li>
-                <Link to="/services" className="text-sm text-muted-foreground hover:text-primary">Teeth Whitening</Link>
-              </li>
+              {["General Dentistry", "Root Canal Treatment", "Dental Implants", "Cosmetic Dentistry", "Teeth Whitening"].map((s) => (
+                <li key={s}>
+                  <Link to="/services" className="text-sm text-muted-foreground transition-colors hover:text-primary">
+                    {s}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -105,7 +99,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t">
+      <div className="border-t border-border/50">
         <div className="container flex flex-col items-center justify-between gap-4 py-6 md:flex-row">
           <p className="text-sm text-muted-foreground">
             © {new Date().getFullYear()} Advanced Dental Hub. All rights reserved.
