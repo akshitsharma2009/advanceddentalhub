@@ -14,9 +14,10 @@ const About = () => {
   return (
     <Layout>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-secondary via-background to-accent/30 py-16 md:py-24">
-        <div className="container">
+      <section className="floating-section bg-gradient-to-br from-secondary/50 via-background to-accent/20 py-16 md:py-24">
+        <div className="container relative z-10">
           <div className="mx-auto max-w-3xl text-center">
+            <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">About Us</p>
             <h1 className="font-display text-4xl font-bold text-foreground md:text-5xl">
               Meet Our <span className="text-primary">Dentist</span>
             </h1>
@@ -33,10 +34,10 @@ const About = () => {
           <div className="grid items-center gap-12 lg:grid-cols-2">
             {/* Photo Placeholder */}
             <div className="relative mx-auto max-w-md lg:mx-0">
-              <div className="aspect-[3/4] overflow-hidden rounded-3xl bg-gradient-to-br from-primary/20 to-secondary shadow-2xl">
+              <div className="glass-card-static aspect-[3/4] !p-0 overflow-hidden bg-gradient-to-br from-primary/10 to-secondary/50">
                 <div className="flex h-full items-center justify-center">
                   <div className="text-center">
-                    <div className="mx-auto mb-4 flex h-32 w-32 items-center justify-center rounded-full bg-primary/20">
+                    <div className="mx-auto mb-4 flex h-32 w-32 items-center justify-center rounded-full bg-primary/10">
                       <Users className="h-16 w-16 text-primary" />
                     </div>
                     <p className="text-lg font-medium text-primary">Dentist Photo</p>
@@ -45,9 +46,9 @@ const About = () => {
               </div>
 
               {/* Experience Badge */}
-              <div className="absolute -bottom-4 -right-4 rounded-2xl bg-card p-4 shadow-xl">
+              <div className="glass-card absolute -bottom-4 -right-4 !p-4">
                 <div className="flex items-center gap-3">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10">
                     <Clock className="h-6 w-6 text-primary" />
                   </div>
                   <div>
@@ -75,14 +76,14 @@ const About = () => {
               </p>
 
               <div className="grid gap-4 sm:grid-cols-2">
-                <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-4">
+                <div className="glass-card-static flex items-center gap-3 !p-4">
                   <GraduationCap className="h-6 w-6 text-primary" />
                   <div>
                     <p className="font-semibold text-foreground">BDS, MDS</p>
                     <p className="text-sm text-muted-foreground">Dental Surgery</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-3 rounded-lg bg-muted/50 p-4">
+                <div className="glass-card-static flex items-center gap-3 !p-4">
                   <Award className="h-6 w-6 text-primary" />
                   <div>
                     <p className="font-semibold text-foreground">Board Certified</p>
@@ -97,7 +98,7 @@ const About = () => {
                   {specializations.map((spec, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-3 py-1 text-sm text-primary"
+                      className="inline-flex items-center gap-1 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-sm text-primary"
                     >
                       <CheckCircle className="h-3 w-3" />
                       {spec}
@@ -111,10 +112,11 @@ const About = () => {
       </section>
 
       {/* Clinic Philosophy */}
-      <section className="bg-muted/30 py-16 md:py-20">
-        <div className="container">
+      <section className="floating-section bg-muted/20 py-16 md:py-20">
+        <div className="container relative z-10">
           <div className="mx-auto max-w-4xl">
             <div className="mb-12 text-center">
+              <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">Our Values</p>
               <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
                 Our Philosophy
               </h2>
@@ -124,35 +126,19 @@ const About = () => {
             </div>
 
             <div className="grid gap-6 md:grid-cols-3">
-              <div className="rounded-2xl border bg-card p-6 text-center shadow-sm">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                  <Heart className="h-7 w-7 text-primary" />
+              {[
+                { icon: Heart, title: "Patient Care", desc: "Your comfort and well-being are at the heart of everything we do." },
+                { icon: Award, title: "Excellence", desc: "Committed to the highest standards of dental care and treatment outcomes." },
+                { icon: Users, title: "Trust", desc: "Building lasting relationships through honesty, transparency, and reliability." },
+              ].map((item, i) => (
+                <div key={i} className="glass-card text-center">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10">
+                    <item.icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <h3 className="mb-2 font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.desc}</p>
                 </div>
-                <h3 className="mb-2 font-semibold text-foreground">Patient Care</h3>
-                <p className="text-sm text-muted-foreground">
-                  Your comfort and well-being are at the heart of everything we do.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border bg-card p-6 text-center shadow-sm">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                  <Award className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="mb-2 font-semibold text-foreground">Excellence</h3>
-                <p className="text-sm text-muted-foreground">
-                  Committed to the highest standards of dental care and treatment outcomes.
-                </p>
-              </div>
-
-              <div className="rounded-2xl border bg-card p-6 text-center shadow-sm">
-                <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-primary/10">
-                  <Users className="h-7 w-7 text-primary" />
-                </div>
-                <h3 className="mb-2 font-semibold text-foreground">Trust</h3>
-                <p className="text-sm text-muted-foreground">
-                  Building lasting relationships through honesty, transparency, and reliability.
-                </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>

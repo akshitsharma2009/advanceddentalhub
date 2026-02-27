@@ -18,29 +18,34 @@ const Header = () => {
 
   return (
     <header
-      className={`sticky top-0 z-50 w-full transition-colors ${
+      className={`sticky top-0 z-50 w-full transition-all ${
         isHeroPage
-          ? "bg-[hsl(210,25%,12%)]/90 backdrop-blur-md border-b border-white/10"
-          : "bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b border-border"
+          ? "border-b border-white/10 bg-[hsl(210,25%,10%)]/80 backdrop-blur-xl"
+          : "border-b border-border/50 bg-background/80 backdrop-blur-xl shadow-sm"
       }`}
     >
       <div className="container flex h-16 items-center justify-between md:h-20">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <span
-            className={`font-display text-xl font-bold tracking-wide uppercase ${
-              isHeroPage ? "text-white" : "text-foreground"
-            }`}
-          >
-            Advanced
-          </span>
-          <span
-            className={`hidden text-[10px] font-medium uppercase tracking-[0.2em] sm:inline ${
-              isHeroPage ? "text-white/50" : "text-muted-foreground"
-            }`}
-          >
-            Dental Hub
-          </span>
+          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-primary/10">
+            <span className="text-lg font-bold text-primary">A</span>
+          </div>
+          <div className="flex flex-col">
+            <span
+              className={`font-display text-lg font-bold leading-tight ${
+                isHeroPage ? "text-white" : "text-foreground"
+              }`}
+            >
+              Advanced
+            </span>
+            <span
+              className={`text-[10px] font-medium uppercase tracking-[0.2em] ${
+                isHeroPage ? "text-white/40" : "text-muted-foreground"
+              }`}
+            >
+              Dental Hub
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Navigation */}
@@ -53,7 +58,7 @@ const Header = () => {
                 location.pathname === link.path
                   ? "text-primary"
                   : isHeroPage
-                    ? "text-white/70"
+                    ? "text-white/60"
                     : "text-muted-foreground"
               }`}
             >
@@ -68,7 +73,7 @@ const Header = () => {
             asChild
             variant="ghost"
             size="icon"
-            className={isHeroPage ? "text-white/70 hover:text-white hover:bg-white/10" : ""}
+            className={`rounded-xl ${isHeroPage ? "text-white/60 hover:text-white hover:bg-white/10" : ""}`}
           >
             <Link to="/appointment" aria-label="Book appointment">
               <Calendar className="h-5 w-5" />
@@ -78,7 +83,7 @@ const Header = () => {
             asChild
             variant="ghost"
             size="icon"
-            className={isHeroPage ? "text-white/70 hover:text-white hover:bg-white/10" : ""}
+            className={`rounded-xl ${isHeroPage ? "text-white/60 hover:text-white hover:bg-white/10" : ""}`}
           >
             <a href="tel:+1234567890" aria-label="Call us">
               <Phone className="h-5 w-5" />
@@ -88,7 +93,7 @@ const Header = () => {
             asChild
             variant="ghost"
             size="icon"
-            className={isHeroPage ? "text-white/70 hover:text-white hover:bg-white/10" : ""}
+            className={`rounded-xl ${isHeroPage ? "text-white/60 hover:text-white hover:bg-white/10" : ""}`}
           >
             <Link to="/contact" aria-label="Find us">
               <MapPin className="h-5 w-5" />
@@ -110,7 +115,7 @@ const Header = () => {
       {isMenuOpen && (
         <div
           className={`border-t lg:hidden ${
-            isHeroPage ? "border-white/10 bg-[hsl(210,25%,12%)]" : "border-border bg-background"
+            isHeroPage ? "border-white/10 bg-[hsl(210,25%,10%)]/95 backdrop-blur-xl" : "border-border/50 bg-background/95 backdrop-blur-xl"
           }`}
         >
           <nav className="container flex flex-col gap-4 py-4">
@@ -123,14 +128,14 @@ const Header = () => {
                   location.pathname === link.path
                     ? "text-primary"
                     : isHeroPage
-                      ? "text-white/70"
+                      ? "text-white/60"
                       : "text-muted-foreground"
                 }`}
               >
                 {link.name}
               </Link>
             ))}
-            <Button asChild className="mt-2">
+            <Button asChild className="mt-2 rounded-full">
               <Link to="/appointment" onClick={() => setIsMenuOpen(false)}>
                 Book Appointment
               </Link>

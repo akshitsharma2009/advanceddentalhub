@@ -37,10 +37,13 @@ const services = [
 
 const ServicesPreview = () => {
   return (
-    <section className="bg-muted/30 py-16 md:py-20">
-      <div className="container">
+    <section className="floating-section bg-muted/30 py-16 md:py-24">
+      <div className="container relative z-10">
         <div className="mb-12 flex flex-col items-center justify-between gap-4 md:flex-row">
           <div>
+            <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">
+              What We Offer
+            </p>
             <h2 className="font-display text-3xl font-bold text-foreground md:text-4xl">
               Our Dental Services
             </h2>
@@ -48,7 +51,7 @@ const ServicesPreview = () => {
               Comprehensive dental care for the whole family.
             </p>
           </div>
-          <Button asChild variant="outline" className="gap-2">
+          <Button asChild variant="outline" className="gap-2 rounded-full">
             <Link to="/services">
               View All Services
               <ArrowRight className="h-4 w-4" />
@@ -58,11 +61,8 @@ const ServicesPreview = () => {
 
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((service, index) => (
-            <div
-              key={index}
-              className="group rounded-2xl border bg-card p-6 shadow-sm transition-all hover:shadow-lg"
-            >
-              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
+            <div key={index} className="glass-card group">
+              <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
                 <service.icon className="h-6 w-6 text-primary" />
               </div>
               <h3 className="mb-2 text-lg font-semibold text-foreground">{service.title}</h3>
