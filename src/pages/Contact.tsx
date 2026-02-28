@@ -6,17 +6,33 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
+import { z } from "zod";
+
+const contactSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  email: z.string().trim().email("Invalid email address").max(255, "Email must be less than 255 characters"),
+  subject: z.string().trim().max(200, "Subject must be less than 200 characters").optional().or(z.literal("")),
+  message: z.string().trim().min(1, "Message is required").max(2000, "Message must be less than 2000 characters"),
+});
 
 const Contact = () => {
   const { toast } = useToast();
   const [formData, setFormData] = useState({ name: "", email: "", subject: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.email || !formData.message) {
-      toast({ title: "Please fill required fields", description: "Name, email, and message are required.", variant: "destructive" });
+    const result = contactSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) fieldErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(fieldErrors);
+      toast({ title: "Please fix the errors", description: "Some fields have invalid values.", variant: "destructive" });
       return;
     }
+    setErrors({});
     toast({ title: "Message Sent!", description: "Thank you for contacting us. We'll get back to you soon." });
     setFormData({ name: "", email: "", subject: "", message: "" });
   };
@@ -101,11 +117,13 @@ const Contact = () => {
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="name">Your Name *</Label>
-                      <Input id="name" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                      <Input id="name" placeholder="John Doe" maxLength={100} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                      {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="email">Email Address *</Label>
-                      <Input id="email" type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+                      <Input id="email" type="email" placeholder="john@example.com" maxLength={255} value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} required />
+                      {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
                     </div>
                   </div>
                   <div className="space-y-2">

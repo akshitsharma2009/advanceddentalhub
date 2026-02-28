@@ -7,21 +7,40 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Calendar, Clock, CheckCircle, Phone, Mail } from "lucide-react";
+import { z } from "zod";
 
 const treatments = ["General Check-up", "Root Canal Treatment", "Dental Implants", "Braces & Aligners", "Cosmetic Dentistry", "Teeth Whitening", "Gum Treatment", "Pediatric Dentistry", "Other"];
 const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+
+const appointmentSchema = z.object({
+  name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters").regex(/^[+\d\s()-]+$/, "Invalid phone number format"),
+  email: z.string().trim().max(255).email("Invalid email").optional().or(z.literal("")),
+  date: z.string().min(1, "Date is required"),
+  time: z.string().min(1, "Time is required"),
+  treatment: z.string().min(1, "Treatment is required"),
+  message: z.string().trim().max(2000, "Message must be less than 2000 characters").optional().or(z.literal("")),
+});
 
 const Appointment = () => {
   const { toast } = useToast();
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [formData, setFormData] = useState({ name: "", phone: "", email: "", date: "", time: "", treatment: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.name || !formData.phone || !formData.date || !formData.time || !formData.treatment) {
-      toast({ title: "Please fill required fields", description: "Name, phone, date, time, and treatment are required.", variant: "destructive" });
+    const result = appointmentSchema.safeParse(formData);
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.errors.forEach((err) => {
+        if (err.path[0]) fieldErrors[err.path[0] as string] = err.message;
+      });
+      setErrors(fieldErrors);
+      toast({ title: "Please fix the errors", description: "Some fields have invalid values.", variant: "destructive" });
       return;
     }
+    setErrors({});
     setIsSubmitted(true);
     toast({ title: "Appointment Request Sent!", description: "Our team will contact you shortly to confirm your appointment." });
   };
@@ -83,11 +102,13 @@ const Appointment = () => {
                 <div className="grid gap-6 md:grid-cols-2">
                   <div className="space-y-2">
                     <Label htmlFor="name">Full Name *</Label>
-                    <Input id="name" placeholder="John Doe" value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                    <Input id="name" placeholder="John Doe" maxLength={100} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
+                    {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number *</Label>
-                    <Input id="phone" type="tel" placeholder="+1 234 567 890" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
+                    <Input id="phone" type="tel" placeholder="+1 234 567 890" maxLength={20} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
+                    {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
                   </div>
                 </div>
                 <div className="space-y-2">
