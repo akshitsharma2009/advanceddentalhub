@@ -2,6 +2,7 @@ import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Sparkles } from "lucide-react";
+import { motion } from "framer-motion";
 
 const TeethModel = lazy(() => import("@/components/3d/TeethModel"));
 
@@ -26,28 +27,48 @@ const HeroSection = () => {
         <div className="grid w-full items-center gap-8 lg:grid-cols-2">
           {/* Left — Copy */}
           <div className="relative z-10 space-y-8">
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm"
+            >
               <Sparkles className="h-4 w-4 text-primary" />
               <span className="text-xs font-medium uppercase tracking-[0.2em] text-white/60">
                 Advanced Dental Hub
               </span>
-            </div>
+            </motion.div>
 
-            <h1 className="font-display text-4xl font-bold leading-[1.08] text-white md:text-5xl lg:text-6xl xl:text-7xl">
+            <motion.h1
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.4, ease: [0.25, 0.1, 0.25, 1] }}
+              className="font-display text-4xl font-bold leading-[1.08] text-white md:text-5xl lg:text-6xl xl:text-7xl"
+            >
               Your smile,{" "}
               <br className="hidden md:block" />
               our{" "}
               <span className="bg-gradient-to-r from-primary to-teal-light bg-clip-text text-transparent">
                 precision.
               </span>
-            </h1>
+            </motion.h1>
 
-            <p className="max-w-md text-base leading-relaxed text-white/50 md:text-lg">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.6 }}
+              className="max-w-md text-base leading-relaxed text-white/50 md:text-lg"
+            >
               Expert dental care using cutting-edge technology and gentle hands.
               Experience painless treatments in a state-of-the-art environment.
-            </p>
+            </motion.p>
 
-            <div className="flex flex-wrap gap-4 pt-2">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="flex flex-wrap gap-4 pt-2"
+            >
               <Button
                 asChild
                 size="lg"
@@ -66,10 +87,15 @@ const HeroSection = () => {
               >
                 <Link to="/about">Our Philosophy</Link>
               </Button>
-            </div>
+            </motion.div>
 
             {/* Floating trust badges */}
-            <div className="flex flex-wrap gap-3 pt-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 1.0 }}
+              className="flex flex-wrap gap-3 pt-4"
+            >
               <div className="flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 backdrop-blur-sm">
                 <Shield className="h-4 w-4 text-primary" />
                 <span className="text-xs text-white/50">15+ Years Experience</span>
@@ -78,17 +104,18 @@ const HeroSection = () => {
                 <Sparkles className="h-4 w-4 text-primary" />
                 <span className="text-xs text-white/50">5000+ Happy Patients</span>
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Right — 3D Model */}
-          <div className="relative flex h-[400px] items-center justify-center md:h-[500px] lg:h-[600px]">
-            {/* Glow behind model */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+            className="relative flex h-[400px] items-center justify-center md:h-[500px] lg:h-[600px]"
+          >
             <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[120px]" />
-            
-            {/* Glass frame around model */}
             <div className="absolute inset-8 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-sm" />
-            
             <Suspense
               fallback={
                 <div className="flex h-full items-center justify-center">
@@ -98,7 +125,7 @@ const HeroSection = () => {
             >
               <TeethModel />
             </Suspense>
-          </div>
+          </motion.div>
         </div>
       </div>
 
