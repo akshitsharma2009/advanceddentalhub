@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Calendar, Phone, MapPin } from "lucide-react";
+import { Menu, X, Calendar, Phone, MapPin, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
@@ -13,8 +13,15 @@ const navLinks = [
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isDark, setIsDark] = useState(() =>
+    document.documentElement.classList.contains("dark")
+  );
   const location = useLocation();
   const isHeroPage = location.pathname === "/";
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", isDark);
+  }, [isDark]);
 
   return (
     <header
@@ -98,6 +105,15 @@ const Header = () => {
             <Link to="/contact" aria-label="Find us">
               <MapPin className="h-5 w-5" />
             </Link>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => setIsDark(!isDark)}
+            className={`rounded-xl ${isHeroPage ? "text-white/60 hover:text-white hover:bg-white/10" : ""}`}
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
         </div>
 
