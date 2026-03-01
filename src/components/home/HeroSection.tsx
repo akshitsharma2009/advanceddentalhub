@@ -1,10 +1,7 @@
-import { Suspense, lazy } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Shield, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
-
-const TeethModel = lazy(() => import("@/components/3d/TeethModel"));
 
 const HeroSection = () => {
   return (
@@ -32,9 +29,7 @@ const HeroSection = () => {
       />
 
       <div className="container relative flex min-h-[90vh] items-center">
-        <div className="grid w-full items-center gap-8 lg:grid-cols-2">
-          {/* Left — Copy */}
-          <div className="relative z-10 space-y-8">
+        <div className="relative z-10 w-full max-w-2xl space-y-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -113,27 +108,6 @@ const HeroSection = () => {
                 <span className="text-xs text-white/50">5000+ Happy Patients</span>
               </div>
             </motion.div>
-          </div>
-
-          {/* Right — 3D Model */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-            className="relative flex h-[400px] items-center justify-center md:h-[500px] lg:h-[600px]"
-          >
-            <div className="absolute left-1/2 top-1/2 h-80 w-80 -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/15 blur-[120px]" />
-            <div className="absolute inset-8 rounded-3xl border border-white/10 bg-white/[0.03] backdrop-blur-sm" />
-            <Suspense
-              fallback={
-                <div className="flex h-full items-center justify-center">
-                  <div className="h-16 w-16 animate-pulse rounded-full border-2 border-primary/40" />
-                </div>
-              }
-            >
-              <TeethModel />
-            </Suspense>
-          </motion.div>
         </div>
       </div>
 
