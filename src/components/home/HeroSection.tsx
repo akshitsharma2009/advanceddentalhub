@@ -5,14 +5,14 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(210,25%,10%)] via-[hsl(210,25%,14%)] to-[hsl(200,30%,16%)]">
+    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(262,30%,18%)] via-[hsl(262,35%,22%)] to-[hsl(270,30%,26%)]">
       {/* Background dentist image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{ backgroundImage: "url('/images/dentist-hero.png')" }}
       />
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(210,25%,10%)]/90 via-[hsl(210,25%,10%)]/70 to-[hsl(210,25%,10%)]/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(262,30%,18%)]/90 via-[hsl(262,30%,18%)]/70 to-[hsl(262,30%,18%)]/50" />
 
       {/* Ambient glow orbs */}
       <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
@@ -23,7 +23,7 @@ const HeroSection = () => {
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(hsl(174,62%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(174,62%,50%) 1px, transparent 1px)",
+            "linear-gradient(hsl(262,60%,58%) 1px, transparent 1px), linear-gradient(90deg, hsl(262,60%,58%) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
