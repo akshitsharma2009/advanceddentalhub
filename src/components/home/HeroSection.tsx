@@ -9,6 +9,14 @@ const TeethModel = lazy(() => import("@/components/3d/TeethModel"));
 const HeroSection = () => {
   return (
     <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(210,25%,10%)] via-[hsl(210,25%,14%)] to-[hsl(200,30%,16%)]">
+      {/* Background dentist image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
+        style={{ backgroundImage: "url('/images/dentist-hero.png')" }}
+      />
+      {/* Dark overlay for text readability */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(210,25%,10%)]/90 via-[hsl(210,25%,10%)]/70 to-[hsl(210,25%,10%)]/50" />
+
       {/* Ambient glow orbs */}
       <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
       <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-[100px]" />
