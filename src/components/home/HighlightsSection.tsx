@@ -2,10 +2,10 @@ import { Syringe, Cpu, UserCheck, BadgeDollarSign } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 const highlights = [
-  { icon: Syringe, title: "Painless Treatments", description: "Modern anesthesia techniques ensure comfortable, virtually pain-free dental procedures." },
-  { icon: Cpu, title: "Advanced Equipment", description: "State-of-the-art dental technology for accurate diagnosis and effective treatments." },
-  { icon: UserCheck, title: "Experienced Dentist", description: "Over 15 years of expertise in comprehensive dental care and specialized treatments." },
-  { icon: BadgeDollarSign, title: "Transparent Pricing", description: "Clear, upfront pricing with no hidden costs. Quality care at affordable rates." },
+  { icon: Syringe, title: "Painless Treatments", description: "Modern anesthesia techniques ensure comfortable, virtually pain-free dental procedures.", image: "/images/why/painless.jpg" },
+  { icon: Cpu, title: "Advanced Equipment", description: "State-of-the-art dental technology for accurate diagnosis and effective treatments.", image: "/images/highlights/equipment.jpg" },
+  { icon: UserCheck, title: "Experienced Dentist", description: "Over 15 years of expertise in comprehensive dental care and specialized treatments.", image: "/images/why/experienced.jpg" },
+  { icon: BadgeDollarSign, title: "Transparent Pricing", description: "Clear, upfront pricing with no hidden costs. Quality care at affordable rates.", image: "/images/highlights/pricing.jpg" },
 ];
 
 const HighlightsSection = () => {
@@ -21,12 +21,23 @@ const HighlightsSection = () => {
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {highlights.map((item, index) => (
             <StaggerItem key={index}>
-              <div className="glass-card group cursor-default h-full">
-                <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                  <item.icon className="h-7 w-7 text-primary" />
+              <div className="glass-card group cursor-default h-full overflow-hidden !p-0">
+                <div className="relative h-44 overflow-hidden">
+                  <img
+                    src={item.image}
+                    alt={item.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                  <div className="absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/80 backdrop-blur-sm">
+                    <item.icon className="h-6 w-6 text-white" />
+                  </div>
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-foreground">{item.title}</h3>
-                <p className="text-sm text-muted-foreground">{item.description}</p>
+                <div className="p-5">
+                  <h3 className="mb-2 text-lg font-semibold text-foreground">{item.title}</h3>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
               </div>
             </StaggerItem>
           ))}

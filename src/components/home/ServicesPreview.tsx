@@ -1,15 +1,15 @@
 import { Link } from "react-router-dom";
-import { ArrowRight, Stethoscope, CircleDot, Puzzle, Smile, Sparkles, Baby } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 
 const services = [
-  { icon: Stethoscope, title: "General Dentistry", description: "Comprehensive check-ups, cleanings, and preventive care for optimal oral health." },
-  { icon: CircleDot, title: "Root Canal Treatment", description: "Painless root canal therapy to save infected teeth and relieve pain." },
-  { icon: Puzzle, title: "Dental Implants", description: "Permanent tooth replacement solutions that look and feel natural." },
-  { icon: Smile, title: "Cosmetic Dentistry", description: "Smile makeovers with veneers, bonding, and aesthetic treatments." },
-  { icon: Sparkles, title: "Teeth Whitening", description: "Professional whitening for a brighter, more confident smile." },
-  { icon: Baby, title: "Pediatric Dentistry", description: "Gentle, kid-friendly dental care in a comfortable environment." },
+  { title: "General Dentistry", description: "Comprehensive check-ups, cleanings, and preventive care.", image: "/images/services/general-dentistry.jpg" },
+  { title: "Root Canal Treatment", description: "Painless root canal therapy to save infected teeth.", image: "/images/services/root-canal.jpg" },
+  { title: "Dental Implants", description: "Permanent tooth replacement that looks natural.", image: "/images/services/dental-implants.jpg" },
+  { title: "Cosmetic Dentistry", description: "Smile makeovers with veneers, bonding & aesthetics.", image: "/images/services/cosmetic.jpg" },
+  { title: "Teeth Whitening", description: "Professional whitening for a brighter smile.", image: "/images/services/whitening.jpg" },
+  { title: "Pediatric Dentistry", description: "Gentle, kid-friendly dental care.", image: "/images/services/pediatric.jpg" },
 ];
 
 const ServicesPreview = () => {
@@ -30,15 +30,23 @@ const ServicesPreview = () => {
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.1}>
           {services.map((service, index) => (
             <StaggerItem key={index}>
-              <div className="glass-card group h-full">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 transition-colors group-hover:bg-primary/20">
-                  <service.icon className="h-6 w-6 text-primary" />
+              <div className="glass-card group h-full overflow-hidden !p-0">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-foreground">{service.title}</h3>
-                <p className="mb-4 text-sm text-muted-foreground">{service.description}</p>
-                <Link to="/appointment" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
-                  Book Now<ArrowRight className="h-3 w-3" />
-                </Link>
+                <div className="p-6">
+                  <h3 className="mb-2 text-lg font-semibold text-foreground">{service.title}</h3>
+                  <p className="mb-4 text-sm text-muted-foreground">{service.description}</p>
+                  <Link to="/appointment" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                    Book Now<ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
               </div>
             </StaggerItem>
           ))}
