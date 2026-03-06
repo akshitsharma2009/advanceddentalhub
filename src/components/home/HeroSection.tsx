@@ -5,25 +5,25 @@ import { motion } from "framer-motion";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(262,30%,18%)] via-[hsl(262,35%,22%)] to-[hsl(270,30%,26%)]">
+    <section className="relative min-h-[90vh] overflow-hidden bg-gradient-to-br from-[hsl(0,0%,8%)] via-[hsl(0,0%,12%)] to-[hsl(0,0%,16%)]">
       {/* Background dentist image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
         style={{ backgroundImage: "url('/images/dentist-hero.png')" }}
       />
       {/* Dark overlay for text readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(262,30%,18%)]/90 via-[hsl(262,30%,18%)]/70 to-[hsl(262,30%,18%)]/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[hsl(0,0%,8%)]/90 via-[hsl(0,0%,8%)]/70 to-[hsl(0,0%,8%)]/50" />
 
       {/* Ambient glow orbs */}
-      <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-primary/10 blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-accent/10 blur-[100px]" />
+      <div className="absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-white/5 blur-[120px]" />
+      <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-white/5 blur-[100px]" />
 
       {/* Subtle grid overlay */}
       <div
         className="absolute inset-0 opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(hsl(262,60%,58%) 1px, transparent 1px), linear-gradient(90deg, hsl(262,60%,58%) 1px, transparent 1px)",
+            "linear-gradient(hsl(0,0%,50%) 1px, transparent 1px), linear-gradient(90deg, hsl(0,0%,50%) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
