@@ -23,7 +23,7 @@ const OptimizedImage = ({ src, alt, className, priority = false, ...props }: Opt
       {/* Blur placeholder */}
       <div
         className={cn(
-          "absolute inset-0 bg-muted animate-pulse transition-opacity duration-500",
+          "absolute inset-0 bg-muted transition-opacity duration-500",
           loaded ? "opacity-0" : "opacity-100"
         )}
       />
