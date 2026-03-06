@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 const services = [
   { title: "General Dentistry", description: "Comprehensive check-ups, cleanings, and preventive care.", image: "/images/services/general-dentistry.jpg" },
