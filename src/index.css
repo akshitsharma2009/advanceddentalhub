@@ -7,88 +7,88 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 10%;
+    --foreground: 260 20% 20%;
 
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 10%;
+    --card: 260 30% 98%;
+    --card-foreground: 260 20% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 10%;
+    --popover-foreground: 260 20% 20%;
 
-    --primary: 0 0% 15%;
+    --primary: 262 60% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 0 0% 96%;
-    --secondary-foreground: 0 0% 15%;
+    --secondary: 262 40% 96%;
+    --secondary-foreground: 262 60% 40%;
 
-    --muted: 0 0% 96%;
-    --muted-foreground: 0 0% 45%;
+    --muted: 260 20% 96%;
+    --muted-foreground: 260 10% 50%;
 
-    --accent: 0 0% 94%;
-    --accent-foreground: 0 0% 15%;
+    --accent: 270 40% 94%;
+    --accent-foreground: 262 60% 40%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
-    --ring: 0 0% 15%;
+    --border: 260 20% 90%;
+    --input: 260 20% 90%;
+    --ring: 262 60% 58%;
 
     --radius: 0.75rem;
 
-    /* Custom monochrome tokens */
-    --teal: 0 0% 15%;
-    --teal-dark: 0 0% 8%;
-    --teal-light: 0 0% 95%;
-    --light-blue: 0 0% 96%;
-    --soft-grey: 0 0% 50%;
-    --cream: 0 0% 98%;
+    /* Custom violet theme colors */
+    --teal: 262 60% 58%;
+    --teal-dark: 262 60% 45%;
+    --teal-light: 270 50% 95%;
+    --light-blue: 262 40% 96%;
+    --soft-grey: 260 10% 50%;
+    --cream: 270 20% 98%;
 
     /* Floating / glass tokens */
     --glass-bg: 0 0% 100% / 0.7;
-    --glass-border: 0 0% 90% / 0.5;
-    --shadow-float: 0 8px 32px -8px hsl(0 0% 0% / 0.08);
-    --shadow-float-lg: 0 16px 48px -12px hsl(0 0% 0% / 0.12);
+    --glass-border: 260 30% 90% / 0.5;
+    --shadow-float: 0 8px 32px -8px hsl(262 60% 40% / 0.08);
+    --shadow-float-lg: 0 16px 48px -12px hsl(262 60% 40% / 0.12);
   }
 
   .dark {
-    --background: 0 0% 5%;
-    --foreground: 0 0% 95%;
+    --background: 260 20% 8%;
+    --foreground: 260 15% 95%;
 
-    --card: 0 0% 10%;
-    --card-foreground: 0 0% 95%;
+    --card: 260 20% 12%;
+    --card-foreground: 260 15% 95%;
 
-    --popover: 0 0% 10%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 260 20% 12%;
+    --popover-foreground: 260 15% 95%;
 
-    --primary: 0 0% 90%;
-    --primary-foreground: 0 0% 5%;
+    --primary: 262 60% 65%;
+    --primary-foreground: 260 20% 8%;
 
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 95%;
+    --secondary: 260 20% 18%;
+    --secondary-foreground: 260 15% 95%;
 
-    --muted: 0 0% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 260 20% 18%;
+    --muted-foreground: 260 10% 65%;
 
-    --accent: 0 0% 15%;
-    --accent-foreground: 0 0% 95%;
+    --accent: 260 20% 18%;
+    --accent-foreground: 260 15% 95%;
 
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 20%;
-    --input: 0 0% 20%;
-    --ring: 0 0% 90%;
+    --border: 260 20% 20%;
+    --input: 260 20% 20%;
+    --ring: 262 60% 65%;
 
-    --teal: 0 0% 90%;
-    --teal-dark: 0 0% 80%;
-    --teal-light: 0 0% 15%;
-    --light-blue: 0 0% 12%;
-    --soft-grey: 0 0% 60%;
-    --cream: 0 0% 8%;
+    --teal: 262 60% 65%;
+    --teal-dark: 262 60% 55%;
+    --teal-light: 270 40% 15%;
+    --light-blue: 262 30% 15%;
+    --soft-grey: 260 10% 65%;
+    --cream: 270 10% 12%;
 
-    --glass-bg: 0 0% 10% / 0.6;
-    --glass-border: 0 0% 25% / 0.3;
+    --glass-bg: 260 20% 12% / 0.6;
+    --glass-border: 260 20% 30% / 0.3;
     --shadow-float: 0 8px 32px -8px hsl(0 0% 0% / 0.3);
     --shadow-float-lg: 0 16px 48px -12px hsl(0 0% 0% / 0.4);
   }
@@ -117,11 +117,11 @@
 
 @layer components {
   .glass-card {
-    @apply relative rounded-2xl border border-black/10 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.08)] backdrop-blur-xl transition-all duration-300;
+    @apply relative rounded-2xl border border-white/20 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(262_60%_40%/0.08)] backdrop-blur-xl transition-all duration-300;
   }
 
   .glass-card:hover {
-    @apply shadow-[0_16px_48px_-12px_hsl(0_0%_0%/0.12)] -translate-y-1;
+    @apply shadow-[0_16px_48px_-12px_hsl(262_60%_40%/0.12)] -translate-y-1;
   }
 
   .dark .glass-card {
@@ -129,7 +129,7 @@
   }
 
   .glass-card-static {
-    @apply relative rounded-2xl border border-black/10 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.08)] backdrop-blur-xl;
+    @apply relative rounded-2xl border border-white/20 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(262_60%_40%/0.08)] backdrop-blur-xl;
   }
 
   .dark .glass-card-static {
@@ -142,14 +142,14 @@
 
   .floating-section::before {
     content: '';
-    @apply absolute -top-40 -right-40 h-80 w-80 rounded-full opacity-5 blur-[100px];
-    background: hsl(var(--foreground));
+    @apply absolute -top-40 -right-40 h-80 w-80 rounded-full opacity-20 blur-[100px];
+    background: hsl(var(--primary));
   }
 
   .floating-section::after {
     content: '';
-    @apply absolute -bottom-40 -left-40 h-80 w-80 rounded-full opacity-5 blur-[100px];
-    background: hsl(var(--foreground));
+    @apply absolute -bottom-40 -left-40 h-80 w-80 rounded-full opacity-10 blur-[100px];
+    background: hsl(var(--accent));
   }
 }
 

@@ -12,9 +12,9 @@ const reasons = [
 
 const WhyChooseUs = () => {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(0,0%,8%)] via-[hsl(0,0%,12%)] to-[hsl(0,0%,14%)] py-16 md:py-24">
-      <div className="absolute left-1/3 top-0 h-72 w-72 rounded-full bg-white/5 blur-[100px]" />
-      <div className="absolute bottom-0 right-1/4 h-60 w-60 rounded-full bg-white/5 blur-[80px]" />
+    <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(262,30%,12%)] via-[hsl(262,25%,16%)] to-[hsl(270,30%,18%)] py-16 md:py-24">
+      <div className="absolute left-1/3 top-0 h-72 w-72 rounded-full bg-primary/10 blur-[100px]" />
+      <div className="absolute bottom-0 right-1/4 h-60 w-60 rounded-full bg-accent/10 blur-[80px]" />
 
       <div className="container relative z-10">
         <ScrollReveal className="mb-12 text-center">

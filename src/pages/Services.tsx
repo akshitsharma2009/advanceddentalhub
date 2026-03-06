@@ -73,8 +73,8 @@ const Services = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(0,0%,8%)] via-[hsl(0,0%,12%)] to-[hsl(0,0%,14%)] py-16 md:py-20">
-        <div className="absolute left-1/3 top-0 h-60 w-60 rounded-full bg-white/5 blur-[100px]" />
+      <section className="relative overflow-hidden bg-gradient-to-br from-[hsl(262,30%,12%)] via-[hsl(262,25%,16%)] to-[hsl(270,30%,18%)] py-16 md:py-20">
+        <div className="absolute left-1/3 top-0 h-60 w-60 rounded-full bg-primary/10 blur-[100px]" />
         <div className="container relative z-10 text-center">
           <h2 className="font-display text-3xl font-bold text-white md:text-4xl">
             Not Sure Which Treatment You Need?
