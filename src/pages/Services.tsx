@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 const services = [
   { title: "General Dentistry", image: "/images/services/general-dentistry.jpg", description: "Comprehensive oral health care including routine check-ups, cleanings, fillings, and preventive treatments to maintain your dental health.", benefits: ["Regular check-ups & cleanings", "Cavity fillings", "Preventive care", "Oral health education"] },
@@ -40,11 +41,10 @@ const Services = () => {
             {services.map((service, index) => (
               <div key={index} className="glass-card group overflow-hidden !p-0">
                 <div className="relative h-56 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={service.image}
                     alt={service.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
