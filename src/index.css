@@ -117,11 +117,11 @@
 
 @layer components {
   .glass-card {
-    @apply relative rounded-2xl border border-white/20 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(262_60%_40%/0.08)] backdrop-blur-xl transition-all duration-300;
+    @apply relative rounded-2xl border border-black/10 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.08)] backdrop-blur-xl transition-all duration-300;
   }
 
   .glass-card:hover {
-    @apply shadow-[0_16px_48px_-12px_hsl(262_60%_40%/0.12)] -translate-y-1;
+    @apply shadow-[0_16px_48px_-12px_hsl(0_0%_0%/0.12)] -translate-y-1;
   }
 
   .dark .glass-card {
@@ -129,7 +129,7 @@
   }
 
   .glass-card-static {
-    @apply relative rounded-2xl border border-white/20 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(262_60%_40%/0.08)] backdrop-blur-xl;
+    @apply relative rounded-2xl border border-black/10 bg-white/70 p-6 shadow-[0_8px_32px_-8px_hsl(0_0%_0%/0.08)] backdrop-blur-xl;
   }
 
   .dark .glass-card-static {
@@ -142,14 +142,14 @@
 
   .floating-section::before {
     content: '';
-    @apply absolute -top-40 -right-40 h-80 w-80 rounded-full opacity-20 blur-[100px];
-    background: hsl(var(--primary));
+    @apply absolute -top-40 -right-40 h-80 w-80 rounded-full opacity-5 blur-[100px];
+    background: hsl(var(--foreground));
   }
 
   .floating-section::after {
     content: '';
-    @apply absolute -bottom-40 -left-40 h-80 w-80 rounded-full opacity-10 blur-[100px];
-    background: hsl(var(--accent));
+    @apply absolute -bottom-40 -left-40 h-80 w-80 rounded-full opacity-5 blur-[100px];
+    background: hsl(var(--foreground));
   }
 }
 
