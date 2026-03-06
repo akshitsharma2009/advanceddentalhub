@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, CheckCircle } from "lucide-react";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 const services = [
   { title: "General Dentistry", image: "/images/services/general-dentistry.jpg", description: "Comprehensive oral health care including routine check-ups, cleanings, fillings, and preventive treatments to maintain your dental health.", benefits: ["Regular check-ups & cleanings", "Cavity fillings", "Preventive care", "Oral health education"] },
