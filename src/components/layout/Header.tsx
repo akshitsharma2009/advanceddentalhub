@@ -27,7 +27,7 @@ const Header = () => {
     <header
       className={`sticky top-0 z-50 w-full transition-all ${
         isHeroPage
-          ? "border-b border-white/10 bg-[hsl(262,30%,18%)]/80 backdrop-blur-xl"
+          ? "border-b border-white/10 bg-[hsl(0,0%,8%)]/80 backdrop-blur-xl"
           : "border-b border-border/50 bg-background/80 backdrop-blur-xl shadow-sm"
       }`}
     >
