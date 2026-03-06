@@ -28,11 +28,10 @@ const WhyChooseUs = () => {
             <StaggerItem key={index}>
               <div className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/10">
                 <div className="relative h-40 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={reason.image}
                     alt={reason.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-3 left-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/80 backdrop-blur-sm">

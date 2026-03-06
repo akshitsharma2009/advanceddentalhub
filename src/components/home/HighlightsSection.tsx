@@ -24,11 +24,10 @@ const HighlightsSection = () => {
             <StaggerItem key={index}>
               <div className="glass-card group cursor-default h-full overflow-hidden !p-0">
                 <div className="relative h-44 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={item.image}
                     alt={item.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                   <div className="absolute bottom-3 left-3 flex h-11 w-11 items-center justify-center rounded-2xl bg-primary/80 backdrop-blur-sm">

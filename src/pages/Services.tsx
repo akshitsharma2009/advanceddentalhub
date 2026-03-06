@@ -41,11 +41,10 @@ const Services = () => {
             {services.map((service, index) => (
               <div key={index} className="glass-card group overflow-hidden !p-0">
                 <div className="relative h-56 overflow-hidden">
-                  <img
+                  <OptimizedImage
                     src={service.image}
                     alt={service.title}
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 </div>
