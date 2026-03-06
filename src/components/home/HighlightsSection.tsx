@@ -1,5 +1,6 @@
 import { Syringe, Cpu, UserCheck, BadgeDollarSign } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import OptimizedImage from "@/components/ui/optimized-image";
 
 const highlights = [
   { icon: Syringe, title: "Painless Treatments", description: "Modern anesthesia techniques ensure comfortable, virtually pain-free dental procedures.", image: "/images/why/painless.jpg" },
