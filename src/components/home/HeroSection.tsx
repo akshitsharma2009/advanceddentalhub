@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ArrowRight, Shield, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
