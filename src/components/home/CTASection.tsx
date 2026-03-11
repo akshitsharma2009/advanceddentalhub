@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ScaleReveal, ScrollReveal } from "@/components/ui/motion";
 
 const CTASection = () => {
