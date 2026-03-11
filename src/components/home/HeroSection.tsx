@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ArrowRight, Shield, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -72,16 +73,11 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-wrap gap-4 pt-2"
             >
-              <Button
-                asChild
-                size="lg"
-                className="rounded-full px-8 text-sm font-medium tracking-wide shadow-lg shadow-primary/25"
-              >
-                <Link to="/appointment">
+              <Link to="/appointment">
+                <MetalButton variant="primary">
                   Book Appointment
-                  <ArrowRight className="ml-1 h-4 w-4" />
-                </Link>
-              </Button>
+                </MetalButton>
+              </Link>
               <Button
                 asChild
                 variant="outline"

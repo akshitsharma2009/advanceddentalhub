@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ScaleReveal, ScrollReveal } from "@/components/ui/motion";
 
 const CTASection = () => {
@@ -19,9 +20,9 @@ const CTASection = () => {
                 Take the first step towards healthier teeth and a brighter smile. Book your appointment today and experience the difference.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Button asChild size="lg" className="gap-2 rounded-full shadow-lg shadow-primary/25">
-                  <Link to="/appointment">Book Appointment<ArrowRight className="h-4 w-4" /></Link>
-                </Button>
+                <Link to="/appointment">
+                  <MetalButton variant="primary">Book Appointment</MetalButton>
+                </Link>
                 <Button asChild variant="outline" size="lg" className="gap-2 rounded-full">
                   <a href="tel:+1234567890"><Phone className="h-4 w-4" />Call Us Now</a>
                 </Button>
