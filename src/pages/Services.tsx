@@ -59,12 +59,9 @@ const Services = () => {
                       </div>
                     ))}
                   </div>
-                  <Button asChild className="gap-2 rounded-full">
-                    <Link to="/appointment">
-                      Book Appointment
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
+                  <Link to="/appointment">
+                    <MetalButton variant="primary">Book Appointment</MetalButton>
+                  </Link>
                 </div>
               </div>
             ))}
