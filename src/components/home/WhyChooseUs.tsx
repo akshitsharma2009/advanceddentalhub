@@ -1,6 +1,7 @@
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { Award, ShieldCheck, Zap, Heart, Sparkles } from "lucide-react";
 import OptimizedImage from "@/components/ui/optimized-image";
+import TiltCard from "@/components/ui/tilt-card";
 
 const reasons = [
   { icon: Award, title: "Experienced & Certified", description: "Qualified dentist with years of specialized training", image: "/images/why/experienced.jpg" },
