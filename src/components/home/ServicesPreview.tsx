@@ -48,9 +48,9 @@ const ServicesPreview = () => {
                   <Link to="/appointment" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                     Book Now<ArrowRight className="h-3 w-3" />
                   </Link>
+                </div>
               </div>
               </TiltCard>
-              </div>
             </StaggerItem>
           ))}
         </StaggerContainer>
