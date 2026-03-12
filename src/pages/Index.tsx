@@ -13,6 +13,7 @@ const Index = () => {
     <Layout>
       <HeroSection />
       <HighlightsSection />
+      <ScrollShowcaseSection />
       <ServicesPreview />
       <WhyChooseUs />
       <TestimonialsSection />
