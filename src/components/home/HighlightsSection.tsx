@@ -23,6 +23,7 @@ const HighlightsSection = () => {
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {highlights.map((item, index) => (
             <StaggerItem key={index}>
+              <TiltCard className="h-full">
               <div className="glass-card group cursor-default h-full overflow-hidden !p-0">
                 <div className="relative h-44 overflow-hidden">
                   <OptimizedImage
