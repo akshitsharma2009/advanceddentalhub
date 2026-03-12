@@ -41,6 +41,7 @@ const HighlightsSection = () => {
                   <p className="text-sm text-muted-foreground">{item.description}</p>
                 </div>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>

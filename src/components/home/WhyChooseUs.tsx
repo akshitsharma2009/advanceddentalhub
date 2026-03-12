@@ -45,6 +45,7 @@ const WhyChooseUs = () => {
                   <p className="text-sm text-white/60">{reason.description}</p>
                 </div>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>

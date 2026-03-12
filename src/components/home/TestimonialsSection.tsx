@@ -33,6 +33,7 @@ const TestimonialsSection = () => {
                 <p className="mb-4 text-sm text-muted-foreground">"{testimonial.feedback}"</p>
                 <p className="font-semibold text-foreground">{testimonial.name}</p>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>
