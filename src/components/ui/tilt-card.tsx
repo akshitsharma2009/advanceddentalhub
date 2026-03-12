@@ -32,6 +32,15 @@ const TiltCard = ({
   const glareY = useTransform(y, [0, 1], [0, 100]);
   const glareOpacity = useMotionValue(0);
 
+  // Dynamic shadow that shifts opposite to tilt direction
+  const shadowX = useSpring(useTransform(x, [0, 1], [8, -8]), { stiffness: 200, damping: 20 });
+  const shadowY = useSpring(useTransform(y, [0, 1], [8, -8]), { stiffness: 200, damping: 20 });
+  const boxShadow = useTransform(
+    [shadowX, shadowY, glareOpacity],
+    ([sx, sy, opacity]) =>
+      `${sx}px ${sy}px 25px -5px hsl(var(--primary) / ${(opacity as number) > 0 ? 0.15 : 0}), ${sx}px ${sy}px 10px -6px hsl(var(--primary) / ${(opacity as number) > 0 ? 0.1 : 0})`
+  );
+
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
@@ -53,6 +62,7 @@ const TiltCard = ({
       style={{
         rotateX,
         rotateY,
+        boxShadow,
         transformStyle: "preserve-3d",
         perspective: "1000px",
       }}
