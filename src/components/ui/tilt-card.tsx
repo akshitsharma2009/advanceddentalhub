@@ -62,6 +62,7 @@ const TiltCard = ({
       style={{
         rotateX,
         rotateY,
+        boxShadow,
         transformStyle: "preserve-3d",
         perspective: "1000px",
       }}
