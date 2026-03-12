@@ -1,5 +1,6 @@
 import { Star, Quote } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import TiltCard from "@/components/ui/tilt-card";
 
 const testimonials = [
   { name: "Sarah Johnson", feedback: "I was terrified of dentists until I found Advanced Dental Hub. The staff is incredibly gentle, and I didn't feel a thing during my root canal. Highly recommend!", rating: 5 },
