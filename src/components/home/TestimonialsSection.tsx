@@ -1,5 +1,6 @@
 import { Star, Quote } from "lucide-react";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
+import TiltCard from "@/components/ui/tilt-card";
 
 const testimonials = [
   { name: "Sarah Johnson", feedback: "I was terrified of dentists until I found Advanced Dental Hub. The staff is incredibly gentle, and I didn't feel a thing during my root canal. Highly recommend!", rating: 5 },
@@ -21,6 +22,7 @@ const TestimonialsSection = () => {
         <StaggerContainer className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {testimonials.map((testimonial, index) => (
             <StaggerItem key={index}>
+              <TiltCard className="h-full">
               <div className="glass-card group cursor-default h-full">
                 <Quote className="absolute right-4 top-4 h-8 w-8 text-primary/10" />
                 <div className="mb-4 flex gap-1">
@@ -31,6 +33,7 @@ const TestimonialsSection = () => {
                 <p className="mb-4 text-sm text-muted-foreground">"{testimonial.feedback}"</p>
                 <p className="font-semibold text-foreground">{testimonial.name}</p>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>

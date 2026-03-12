@@ -1,6 +1,7 @@
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import { Award, ShieldCheck, Zap, Heart, Sparkles } from "lucide-react";
 import OptimizedImage from "@/components/ui/optimized-image";
+import TiltCard from "@/components/ui/tilt-card";
 
 const reasons = [
   { icon: Award, title: "Experienced & Certified", description: "Qualified dentist with years of specialized training", image: "/images/why/experienced.jpg" },
@@ -26,7 +27,8 @@ const WhyChooseUs = () => {
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5" staggerDelay={0.1}>
           {reasons.map((reason, index) => (
             <StaggerItem key={index}>
-              <div className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:-translate-y-1 hover:bg-white/10">
+              <TiltCard className="h-full">
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl transition-all duration-300 hover:bg-white/10">
                 <div className="relative h-40 overflow-hidden">
                   <OptimizedImage
                     src={reason.image}
@@ -43,6 +45,7 @@ const WhyChooseUs = () => {
                   <p className="text-sm text-white/60">{reason.description}</p>
                 </div>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>

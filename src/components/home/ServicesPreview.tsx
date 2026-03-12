@@ -3,6 +3,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import OptimizedImage from "@/components/ui/optimized-image";
+import TiltCard from "@/components/ui/tilt-card";
 
 const services = [
   { title: "General Dentistry", description: "Comprehensive check-ups, cleanings, and preventive care.", image: "/images/services/general-dentistry.jpg" },
@@ -31,6 +32,7 @@ const ServicesPreview = () => {
         <StaggerContainer className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" staggerDelay={0.1}>
           {services.map((service, index) => (
             <StaggerItem key={index}>
+              <TiltCard className="h-full">
               <div className="glass-card group h-full overflow-hidden !p-0">
                 <div className="relative h-48 overflow-hidden">
                   <OptimizedImage
@@ -48,6 +50,7 @@ const ServicesPreview = () => {
                   </Link>
                 </div>
               </div>
+              </TiltCard>
             </StaggerItem>
           ))}
         </StaggerContainer>
