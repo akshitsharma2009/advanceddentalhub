@@ -3,7 +3,6 @@ import { ArrowRight, Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ScaleReveal, ScrollReveal } from "@/components/ui/motion";
-import { openCalendly } from "@/lib/calendly";
 
 const CTASection = () => {
   return (
@@ -21,9 +20,9 @@ const CTASection = () => {
                 Take the first step towards healthier teeth and a brighter smile. Book your appointment today and experience the difference.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <div onClick={openCalendly} className="cursor-pointer">
+                <Link to="/appointment">
                   <MetalButton variant="primary">Book Free Consultation</MetalButton>
-                </div>
+                </Link>
                 <Button asChild variant="outline" size="lg" className="gap-2 rounded-full">
                   <a href="tel:+1234567890"><Phone className="h-4 w-4" />Call Us Now</a>
                 </Button>
