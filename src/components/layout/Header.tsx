@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Calendar, Phone, MapPin, Sun, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { openCalendly } from "@/lib/calendly";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -77,14 +78,13 @@ const Header = () => {
         {/* Desktop action icons */}
         <div className="hidden items-center gap-1 md:flex">
           <Button
-            asChild
             variant="ghost"
             size="icon"
+            onClick={openCalendly}
             className={`rounded-xl ${isHeroPage ? "text-white/60 hover:text-white hover:bg-white/10" : ""}`}
+            aria-label="Book appointment"
           >
-            <Link to="/appointment" aria-label="Book appointment">
-              <Calendar className="h-5 w-5" />
-            </Link>
+            <Calendar className="h-5 w-5" />
           </Button>
           <Button
             asChild
@@ -151,10 +151,8 @@ const Header = () => {
                 {link.name}
               </Link>
             ))}
-            <Button asChild className="mt-2 rounded-full">
-              <Link to="/appointment" onClick={() => setIsMenuOpen(false)}>
-                Book Appointment
-              </Link>
+            <Button className="mt-2 rounded-full" onClick={() => { openCalendly(); setIsMenuOpen(false); }}>
+              Book Free Consultation
             </Button>
           </nav>
         </div>

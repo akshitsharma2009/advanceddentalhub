@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ArrowRight, Shield, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { openCalendly } from "@/lib/calendly";
 
 const HeroSection = () => {
   return (
@@ -73,11 +74,11 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-wrap gap-4 pt-2"
             >
-              <Link to="/appointment">
+              <div onClick={openCalendly} className="cursor-pointer">
                 <MetalButton variant="primary">
-                  Book Appointment
+                  Book Free Consultation
                 </MetalButton>
-              </Link>
+              </div>
               <Button
                 asChild
                 variant="outline"
