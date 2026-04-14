@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import { ScrollReveal, StaggerContainer, StaggerItem } from "@/components/ui/motion";
 import OptimizedImage from "@/components/ui/optimized-image";
 import TiltCard from "@/components/ui/tilt-card";
-import { openCalendly } from "@/lib/calendly";
 
 const services = [
   { title: "General Dentistry", description: "Comprehensive check-ups, cleanings, and preventive care.", image: "/images/services/general-dentistry.jpg" },
@@ -46,9 +45,9 @@ const ServicesPreview = () => {
                 <div className="p-6">
                   <h3 className="mb-2 text-lg font-semibold text-foreground">{service.title}</h3>
                   <p className="mb-4 text-sm text-muted-foreground">{service.description}</p>
-                  <button onClick={openCalendly} className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
+                  <Link to="/appointment" className="inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline">
                     Book Now<ArrowRight className="h-3 w-3" />
-                  </button>
+                  </Link>
                 </div>
               </div>
               </TiltCard>
