@@ -4,28 +4,42 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, Clock, CheckCircle, Phone, Mail } from "lucide-react";
+import { Calendar as CalendarIcon, CheckCircle, Phone, Mail, ArrowLeft, User, Cake } from "lucide-react";
 import { z } from "zod";
-
-const treatments = ["General Check-up", "Root Canal Treatment", "Dental Implants", "Braces & Aligners", "Cosmetic Dentistry", "Teeth Whitening", "Gum Treatment", "Pediatric Dentistry", "Other"];
-const timeSlots = ["9:00 AM", "10:00 AM", "11:00 AM", "12:00 PM", "2:00 PM", "3:00 PM", "4:00 PM", "5:00 PM", "6:00 PM"];
+import { motion, AnimatePresence } from "framer-motion";
+import { MetalButton } from "@/components/ui/liquid-glass-button";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { format } from "date-fns";
 
 const appointmentSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
+  dob: z.date({ required_error: "Date of birth is required" }),
   phone: z.string().trim().min(1, "Phone is required").max(20, "Phone must be less than 20 characters").regex(/^[+\d\s()-]+$/, "Invalid phone number format"),
-  email: z.string().trim().max(255).email("Invalid email").optional().or(z.literal("")),
-  date: z.string().min(1, "Date is required"),
-  time: z.string().min(1, "Time is required"),
-  treatment: z.string().min(1, "Treatment is required"),
-  message: z.string().trim().max(2000, "Message must be less than 2000 characters").optional().or(z.literal("")),
+  email: z.string().trim().min(1, "Email is required").max(255).email("Invalid email address"),
+  purpose: z.string().trim().min(1, "Purpose is required").max(2000, "Purpose must be less than 2000 characters"),
 });
+
+type FormData = {
+  name: string;
+  dob: Date | undefined;
+  phone: string;
+  email: string;
+  purpose: string;
+};
 
 const Appointment = () => {
   const { toast } = useToast();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [formData, setFormData] = useState({ name: "", phone: "", email: "", date: "", time: "", treatment: "", message: "" });
+  const [step, setStep] = useState<"form" | "calendly">("form");
+  const [formData, setFormData] = useState<FormData>({
+    name: "",
+    dob: undefined,
+    phone: "",
+    email: "",
+    purpose: "",
+  });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -41,40 +55,11 @@ const Appointment = () => {
       return;
     }
     setErrors({});
-    setIsSubmitted(true);
-    toast({ title: "Appointment Request Sent!", description: "Our team will contact you shortly to confirm your appointment." });
+    setStep("calendly");
+    toast({ title: "Great! Now pick a time", description: "Choose a convenient slot on the calendar below." });
   };
 
-  if (isSubmitted) {
-    return (
-      <Layout>
-        <section className="py-16 md:py-24">
-          <div className="container">
-            <div className="mx-auto max-w-lg text-center">
-              <div className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-full bg-green-100">
-                <CheckCircle className="h-10 w-10 text-green-600" />
-              </div>
-              <h1 className="font-display text-3xl font-bold text-foreground md:text-4xl">Thank You!</h1>
-              <p className="mt-4 text-lg text-muted-foreground">Your appointment request has been received. Our team will contact you shortly to confirm your appointment.</p>
-              <div className="glass-card-static mt-8 text-left">
-                <h3 className="mb-4 font-semibold text-foreground">Your Request Details</h3>
-                <div className="space-y-2 text-sm">
-                  <p><span className="text-muted-foreground">Name:</span> {formData.name}</p>
-                  <p><span className="text-muted-foreground">Phone:</span> {formData.phone}</p>
-                  <p><span className="text-muted-foreground">Date:</span> {formData.date}</p>
-                  <p><span className="text-muted-foreground">Time:</span> {formData.time}</p>
-                  <p><span className="text-muted-foreground">Treatment:</span> {formData.treatment}</p>
-                </div>
-              </div>
-              <Button className="mt-6 rounded-full" onClick={() => { setIsSubmitted(false); setFormData({ name: "", phone: "", email: "", date: "", time: "", treatment: "", message: "" }); }}>
-                Book Another Appointment
-              </Button>
-            </div>
-          </div>
-        </section>
-      </Layout>
-    );
-  }
+  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.purpose)}`;
 
   return (
     <Layout>
@@ -84,76 +69,210 @@ const Appointment = () => {
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">Schedule A Visit</p>
             <h1 className="font-display text-4xl font-bold text-foreground md:text-5xl">
-              Book Your <span className="text-primary">Appointment</span>
+              Book Your <span className="text-primary">Free Consultation</span>
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              Schedule your visit in just a few clicks. We'll confirm your appointment shortly.
+              {step === "form"
+                ? "Fill in your details and we'll help you pick the perfect time slot."
+                : "Choose a convenient date and time for your consultation."}
             </p>
+
+            {/* Step indicator */}
+            <div className="mx-auto mt-8 flex max-w-xs items-center justify-center gap-3">
+              <div className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
+                step === "form" ? "bg-primary text-primary-foreground" : "bg-primary/20 text-primary"
+              )}>
+                1
+              </div>
+              <div className={cn("h-0.5 flex-1 rounded-full transition-colors", step === "calendly" ? "bg-primary" : "bg-border")} />
+              <div className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
+                step === "calendly" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+              )}>
+                2
+              </div>
+            </div>
+            <div className="mx-auto mt-2 flex max-w-xs justify-between">
+              <span className={cn("text-xs font-medium", step === "form" ? "text-primary" : "text-muted-foreground")}>Your Info</span>
+              <span className={cn("text-xs font-medium", step === "calendly" ? "text-primary" : "text-muted-foreground")}>Pick a Time</span>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Booking Form */}
+      {/* Content */}
       <section className="py-16 md:py-20">
         <div className="container">
-          <div className="mx-auto max-w-2xl">
-            <div className="glass-card-static !p-6 md:!p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="name">Full Name *</Label>
-                    <Input id="name" placeholder="John Doe" maxLength={100} value={formData.name} onChange={(e) => setFormData({ ...formData, name: e.target.value })} required />
-                    {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number *</Label>
-                    <Input id="phone" type="tel" placeholder="+1 234 567 890" maxLength={20} value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })} required />
-                    {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email (Optional)</Label>
-                  <Input id="email" type="email" placeholder="john@example.com" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                </div>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div className="space-y-2">
-                    <Label htmlFor="date">Preferred Date *</Label>
-                    <div className="relative">
-                      <Calendar className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-                      <Input id="date" type="date" className="pl-10" value={formData.date} onChange={(e) => setFormData({ ...formData, date: e.target.value })} min={new Date().toISOString().split("T")[0]} required />
+          <AnimatePresence mode="wait">
+            {step === "form" ? (
+              <motion.div
+                key="form"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                transition={{ duration: 0.3 }}
+                className="mx-auto max-w-2xl"
+              >
+                <div className="glass-card-static !p-6 md:!p-8">
+                  <h2 className="mb-6 text-xl font-semibold text-foreground">Tell us about yourself</h2>
+                  <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* Name */}
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="flex items-center gap-2">
+                        <User className="h-4 w-4 text-muted-foreground" /> Full Name *
+                      </Label>
+                      <Input
+                        id="name"
+                        placeholder="John Doe"
+                        maxLength={100}
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        required
+                      />
+                      {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
                     </div>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="time">Preferred Time *</Label>
-                    <Select value={formData.time} onValueChange={(value) => setFormData({ ...formData, time: value })}>
-                      <SelectTrigger><Clock className="mr-2 h-4 w-4 text-muted-foreground" /><SelectValue placeholder="Select time" /></SelectTrigger>
-                      <SelectContent>{timeSlots.map((slot) => (<SelectItem key={slot} value={slot}>{slot}</SelectItem>))}</SelectContent>
-                    </Select>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="treatment">Treatment Type *</Label>
-                  <Select value={formData.treatment} onValueChange={(value) => setFormData({ ...formData, treatment: value })}>
-                    <SelectTrigger><SelectValue placeholder="Select treatment" /></SelectTrigger>
-                    <SelectContent>{treatments.map((t) => (<SelectItem key={t} value={t}>{t}</SelectItem>))}</SelectContent>
-                  </Select>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="message">Problem Description (Optional)</Label>
-                  <Textarea id="message" placeholder="Describe your dental concern or any specific requirements..." rows={4} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} />
-                </div>
-                <Button type="submit" size="lg" className="w-full rounded-full">Submit Appointment Request</Button>
-              </form>
-            </div>
 
-            <div className="glass-card-static mt-8">
-              <p className="mb-4 text-center text-sm text-muted-foreground">Need immediate assistance? Contact us directly:</p>
-              <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <a href="tel:+1234567890" className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"><Phone className="h-4 w-4" />+1 234 567 890</a>
-                <a href="mailto:info@advanceddentalhub.com" className="flex items-center gap-2 text-sm font-medium text-primary hover:underline"><Mail className="h-4 w-4" />info@advanceddentalhub.com</a>
-              </div>
-            </div>
-          </div>
+                    {/* DOB */}
+                    <div className="space-y-2">
+                      <Label className="flex items-center gap-2">
+                        <Cake className="h-4 w-4 text-muted-foreground" /> Date of Birth *
+                      </Label>
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Button
+                            variant="outline"
+                            className={cn(
+                              "w-full justify-start text-left font-normal",
+                              !formData.dob && "text-muted-foreground"
+                            )}
+                          >
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            {formData.dob ? format(formData.dob, "PPP") : <span>Pick your date of birth</span>}
+                          </Button>
+                        </PopoverTrigger>
+                        <PopoverContent className="w-auto p-0" align="start">
+                          <Calendar
+                            mode="single"
+                            selected={formData.dob}
+                            onSelect={(date) => setFormData({ ...formData, dob: date })}
+                            disabled={(date) => date > new Date() || date < new Date("1900-01-01")}
+                            initialFocus
+                            className={cn("p-3 pointer-events-auto")}
+                            captionLayout="dropdown-buttons"
+                            fromYear={1920}
+                            toYear={new Date().getFullYear()}
+                          />
+                        </PopoverContent>
+                      </Popover>
+                      {errors.dob && <p className="text-sm text-destructive">{errors.dob}</p>}
+                    </div>
+
+                    {/* Phone & Email */}
+                    <div className="grid gap-6 md:grid-cols-2">
+                      <div className="space-y-2">
+                        <Label htmlFor="phone" className="flex items-center gap-2">
+                          <Phone className="h-4 w-4 text-muted-foreground" /> Phone Number *
+                        </Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          placeholder="+1 234 567 890"
+                          maxLength={20}
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          required
+                        />
+                        {errors.phone && <p className="text-sm text-destructive">{errors.phone}</p>}
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="email" className="flex items-center gap-2">
+                          <Mail className="h-4 w-4 text-muted-foreground" /> Email Address *
+                        </Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          placeholder="john@example.com"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          required
+                        />
+                        {errors.email && <p className="text-sm text-destructive">{errors.email}</p>}
+                      </div>
+                    </div>
+
+                    {/* Purpose */}
+                    <div className="space-y-2">
+                      <Label htmlFor="purpose">Purpose of Consultation *</Label>
+                      <Textarea
+                        id="purpose"
+                        placeholder="e.g. Teeth whitening consultation, general check-up, braces inquiry..."
+                        rows={4}
+                        maxLength={2000}
+                        value={formData.purpose}
+                        onChange={(e) => setFormData({ ...formData, purpose: e.target.value })}
+                        required
+                      />
+                      {errors.purpose && <p className="text-sm text-destructive">{errors.purpose}</p>}
+                    </div>
+
+                    <MetalButton variant="primary" className="w-full">
+                      Continue to Schedule →
+                    </MetalButton>
+                  </form>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="calendly"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.3 }}
+                className="mx-auto max-w-4xl"
+              >
+                {/* Back button */}
+                <Button
+                  variant="ghost"
+                  className="mb-4 gap-2"
+                  onClick={() => setStep("form")}
+                >
+                  <ArrowLeft className="h-4 w-4" /> Back to Details
+                </Button>
+
+                {/* Summary card */}
+                <div className="glass-card-static mb-6 flex flex-wrap items-center gap-x-6 gap-y-2 !py-4">
+                  <div className="flex items-center gap-2 text-sm">
+                    <User className="h-4 w-4 text-primary" />
+                    <span className="text-muted-foreground">Name:</span>
+                    <span className="font-medium text-foreground">{formData.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Mail className="h-4 w-4 text-primary" />
+                    <span className="text-muted-foreground">Email:</span>
+                    <span className="font-medium text-foreground">{formData.email}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-sm">
+                    <Phone className="h-4 w-4 text-primary" />
+                    <span className="text-muted-foreground">Phone:</span>
+                    <span className="font-medium text-foreground">{formData.phone}</span>
+                  </div>
+                </div>
+
+                {/* Calendly embed */}
+                <div className="overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm">
+                  <iframe
+                    src={calendlyUrl}
+                    width="100%"
+                    height="700"
+                    frameBorder="0"
+                    title="Schedule a consultation"
+                    className="w-full"
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       </section>
     </Layout>
