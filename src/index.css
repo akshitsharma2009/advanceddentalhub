@@ -160,3 +160,17 @@
     text-wrap: balance;
   }
 }
+
+/* Vapi widget: anchor to wrapper instead of viewport so we control positioning */
+.vapi-widget-wrapper vapi-widget,
+.vapi-widget-wrapper vapi-widget * {
+  position: relative !important;
+}
+.vapi-widget-wrapper vapi-widget [class*="fixed"],
+.vapi-widget-wrapper vapi-widget [style*="position: fixed"] {
+  position: relative !important;
+  bottom: auto !important;
+  right: auto !important;
+  left: auto !important;
+  top: auto !important;
+}
