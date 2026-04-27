@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar as CalendarIcon, CheckCircle, CheckCircle2, Phone, Mail, ArrowLeft, User, Cake, Home, Clock, MapPin, Bell } from "lucide-react";
+import { Calendar as CalendarIcon, CheckCircle, CheckCircle2, Phone, Mail, ArrowLeft, User, Cake, Home, Clock, MapPin, Bell, Bot } from "lucide-react";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { MetalButton } from "@/components/ui/liquid-glass-button";
@@ -300,6 +300,55 @@ const Appointment = () => {
                     <span className="text-muted-foreground">Phone:</span>
                     <span className="font-medium text-foreground">{formData.phone}</span>
                   </div>
+                </div>
+
+                {/* Lead submission status */}
+                <div className="glass-card-static mb-6 overflow-hidden !p-0">
+                  <div className="flex items-center gap-3 border-b border-border/50 bg-primary/5 px-5 py-3">
+                    <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary/15">
+                      <CheckCircle2 className="h-4 w-4 text-primary" />
+                      <span className="absolute inset-0 animate-ping rounded-full bg-primary/20" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-foreground">Details received — you're in our system</p>
+                      <p className="text-xs text-muted-foreground">Pick a time below to lock in your free consultation.</p>
+                    </div>
+                    <span className="hidden shrink-0 rounded-full bg-primary/10 px-2.5 py-1 text-xs font-medium text-primary sm:inline">
+                      Step 2 of 3
+                    </span>
+                  </div>
+
+                  <ul className="divide-y divide-border/40 px-5">
+                    <li className="flex items-start gap-3 py-3">
+                      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                        <CheckCircle className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Form submitted securely</p>
+                        <p className="text-xs text-muted-foreground">Your name, contact details and concern have been logged.</p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3 py-3">
+                      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                        <Bot className="h-3.5 w-3.5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">AI assistant standing by</p>
+                        <p className="text-xs text-muted-foreground">
+                          Use the chat widget in the corner for quick questions while you choose a time — it has full context of your concern.
+                        </p>
+                      </div>
+                    </li>
+                    <li className="flex items-start gap-3 py-3">
+                      <div className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-muted">
+                        <Clock className="h-3.5 w-3.5 text-muted-foreground" />
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-foreground">Awaiting time selection</p>
+                        <p className="text-xs text-muted-foreground">Once you confirm a slot, our team will reach out within 1 business hour.</p>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
 
                 {/* Calendly embed */}
