@@ -258,9 +258,11 @@ const Appointment = () => {
                       {errors.purpose && <p className="text-sm text-destructive">{errors.purpose}</p>}
                     </div>
 
-                    <MetalButton variant="primary" className="w-full">
-                      Continue to Schedule →
-                    </MetalButton>
+                    <div data-vapi-avoid>
+                      <MetalButton variant="primary" className="w-full">
+                        Continue to Schedule →
+                      </MetalButton>
+                    </div>
                   </form>
                 </div>
               </motion.div>
@@ -352,7 +354,7 @@ const Appointment = () => {
                 </div>
 
                 {/* Calendly embed */}
-                <div className="overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm">
+                <div data-vapi-avoid className="overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm">
                   <iframe
                     src={calendlyUrl}
                     width="100%"

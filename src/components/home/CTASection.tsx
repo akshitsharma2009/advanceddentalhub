@@ -20,7 +20,7 @@ const CTASection = () => {
                 Take the first step towards healthier teeth and a brighter smile. Book your appointment today and experience the difference.
               </p>
               <div className="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-                <Link to="/appointment">
+                <Link to="/appointment" data-vapi-avoid>
                   <MetalButton variant="primary">Book Free Consultation</MetalButton>
                 </Link>
                 <Button asChild variant="outline" size="lg" className="gap-2 rounded-full">
