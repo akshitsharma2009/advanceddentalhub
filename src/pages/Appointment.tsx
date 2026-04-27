@@ -145,7 +145,7 @@ const Appointment = () => {
       <section className="py-16 md:py-20">
         <div className="container">
           <AnimatePresence mode="wait">
-            {step === "form" ? (
+            {step === "form" && (
               <motion.div
                 key="form"
                 initial={{ opacity: 0, x: -20 }}
@@ -262,7 +262,8 @@ const Appointment = () => {
                   </form>
                 </div>
               </motion.div>
-            ) : (
+            )}
+            {step === "calendly" && (
               <motion.div
                 key="calendly"
                 initial={{ opacity: 0, x: 20 }}
