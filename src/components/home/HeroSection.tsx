@@ -73,7 +73,7 @@ const HeroSection = () => {
               transition={{ duration: 0.6, delay: 0.8 }}
               className="flex flex-wrap gap-4 pt-2"
             >
-              <Link to="/appointment">
+              <Link to="/appointment" data-vapi-avoid>
                 <MetalButton variant="primary">
                   Book Free Consultation
                 </MetalButton>
