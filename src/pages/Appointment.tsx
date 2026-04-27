@@ -33,7 +33,7 @@ type FormData = {
 
 const Appointment = () => {
   const { toast } = useToast();
-  const [step, setStep] = useState<"form" | "calendly">("form");
+  const [step, setStep] = useState<"form" | "calendly" | "confirmed">("form");
   const [formData, setFormData] = useState<FormData>({
     name: "",
     dob: undefined,
@@ -42,6 +42,24 @@ const Appointment = () => {
     purpose: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Listen for Calendly booking confirmation via postMessage
+  useEffect(() => {
+    const handler = (e: MessageEvent) => {
+      if (typeof e.data !== "object" || !e.data?.event) return;
+      if (String(e.data.event).indexOf("calendly") !== 0) return;
+      if (e.data.event === "calendly.event_scheduled") {
+        setStep("confirmed");
+        toast({
+          title: "Appointment confirmed! 🎉",
+          description: "We've sent a confirmation to your email.",
+        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+    window.addEventListener("message", handler);
+    return () => window.removeEventListener("message", handler);
+  }, [toast]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +76,13 @@ const Appointment = () => {
     setErrors({});
     setStep("calendly");
     toast({ title: "Great! Now pick a time", description: "Choose a convenient slot on the calendar below." });
+  };
+
+  const handleBookAnother = () => {
+    setFormData({ name: "", dob: undefined, phone: "", email: "", purpose: "" });
+    setErrors({});
+    setStep("form");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.purpose)}`;
