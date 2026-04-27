@@ -42,6 +42,7 @@ const Appointment = () => {
     purpose: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [bookedAt, setBookedAt] = useState<Date>(new Date());
 
   // Listen for Calendly booking confirmation via postMessage
   useEffect(() => {
@@ -49,6 +50,7 @@ const Appointment = () => {
       if (typeof e.data !== "object" || !e.data?.event) return;
       if (String(e.data.event).indexOf("calendly") !== 0) return;
       if (e.data.event === "calendly.event_scheduled") {
+        setBookedAt(new Date());
         setStep("confirmed");
         toast({
           title: "Appointment confirmed! 🎉",
