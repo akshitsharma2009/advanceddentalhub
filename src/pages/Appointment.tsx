@@ -313,6 +313,134 @@ const Appointment = () => {
                 </div>
               </motion.div>
             )}
+            {step === "confirmed" && (
+              <motion.div
+                key="confirmed"
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.96 }}
+                transition={{ duration: 0.4 }}
+                className="mx-auto max-w-2xl"
+              >
+                <div className="glass-card-static overflow-hidden !p-0">
+                  {/* Success header */}
+                  <div className="bg-gradient-to-br from-primary/10 via-primary/5 to-transparent px-6 py-10 text-center md:px-10">
+                    <motion.div
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      transition={{ type: "spring", stiffness: 200, damping: 15, delay: 0.2 }}
+                      className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg"
+                    >
+                      <CheckCircle className="h-10 w-10" />
+                    </motion.div>
+                    <h2 className="font-display text-2xl font-bold text-foreground md:text-3xl">
+                      Appointment Confirmed!
+                    </h2>
+                    <p className="mt-2 text-muted-foreground">
+                      Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. Your free consultation is booked.
+                    </p>
+                  </div>
+
+                  {/* Details */}
+                  <div className="space-y-6 px-6 py-8 md:px-10">
+                    <div>
+                      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Booking Details</h3>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
+                          <User className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <div className="min-w-0">
+                            <p className="text-xs text-muted-foreground">Name</p>
+                            <p className="truncate text-sm font-medium text-foreground">{formData.name}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
+                          <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <div className="min-w-0">
+                            <p className="text-xs text-muted-foreground">Email</p>
+                            <p className="truncate text-sm font-medium text-foreground">{formData.email}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
+                          <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <div className="min-w-0">
+                            <p className="text-xs text-muted-foreground">Phone</p>
+                            <p className="truncate text-sm font-medium text-foreground">{formData.phone}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
+                          <CalendarIcon className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
+                          <div className="min-w-0">
+                            <p className="text-xs text-muted-foreground">Booked On</p>
+                            <p className="truncate text-sm font-medium text-foreground">{format(bookedAt, "PP")}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* What's next */}
+                    <div>
+                      <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">What Happens Next</h3>
+                      <ul className="space-y-3">
+                        <li className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                            <Mail className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Confirmation email sent</p>
+                            <p className="text-xs text-muted-foreground">Check your inbox for the appointment details and a calendar invite.</p>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                            <Bell className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Friendly reminder</p>
+                            <p className="text-xs text-muted-foreground">We'll send a reminder 24 hours before your visit.</p>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                            <Clock className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Arrive 10 minutes early</p>
+                            <p className="text-xs text-muted-foreground">A quick check-in helps us start right on time.</p>
+                          </div>
+                        </li>
+                        <li className="flex items-start gap-3">
+                          <div className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary/10">
+                            <MapPin className="h-3.5 w-3.5 text-primary" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-foreground">Need directions?</p>
+                            <p className="text-xs text-muted-foreground">
+                              Visit our <Link to="/contact" className="text-primary underline-offset-2 hover:underline">contact page</Link> for the clinic address.
+                            </p>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+
+                    {/* CTAs */}
+                    <div className="flex flex-col gap-3 border-t border-border/50 pt-6 sm:flex-row">
+                      <Button asChild variant="outline" className="flex-1 gap-2">
+                        <Link to="/">
+                          <Home className="h-4 w-4" /> Back to Home
+                        </Link>
+                      </Button>
+                      <Button onClick={handleBookAnother} className="flex-1 gap-2">
+                        <CalendarIcon className="h-4 w-4" /> Book Another
+                      </Button>
+                    </div>
+
+                    <p className="text-center text-xs text-muted-foreground">
+                      Need to reschedule? Use the link in your confirmation email or <a href="tel:+1234567890" className="text-primary underline-offset-2 hover:underline">call us</a>.
+                    </p>
+                  </div>
+                </div>
+              </motion.div>
+            )}
           </AnimatePresence>
         </div>
       </section>
