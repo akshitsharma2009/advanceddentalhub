@@ -1,18 +1,22 @@
 import { useEffect, useState } from "react";
+import { Bot, Minus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
  * Floating Vapi chat widget.
  *
- * On small screens, automatically shifts position when any element marked
- * with `data-vapi-avoid` is visible in the viewport — so it never covers
- * primary form CTAs or submit buttons.
+ * On small screens:
+ *  - Auto-shifts position when any element with `data-vapi-avoid` is in view
+ *    (so it never covers primary form CTAs or submit buttons).
+ *  - One-tap minimize button collapses the widget into a small bubble so the
+ *    appointment form stays fully visible. Tap the bubble to restore.
  *
  * Default position : bottom-left (mobile) / bottom-right offset (desktop).
  * Avoiding position: top-right under the header (mobile only).
  */
 const VapiWidget = () => {
   const [shifted, setShifted] = useState(false);
+  const [minimized, setMinimized] = useState(false);
 
   useEffect(() => {
     if (typeof window === "undefined" || !("IntersectionObserver" in window)) return;
@@ -50,7 +54,6 @@ const VapiWidget = () => {
 
     attach();
 
-    // Re-scan when route content swaps in/out (covers SPA navigation)
     const mutationObs = new MutationObserver(() => {
       if (!observer || !mql.matches) return;
       observer.disconnect();
@@ -72,7 +75,7 @@ const VapiWidget = () => {
     <div
       className={cn(
         "vapi-widget-wrapper fixed z-30 transition-all duration-300 ease-out",
-        // Desktop: always bottom-right offset from FloatingCTA
+        // Desktop: always bottom-right offset from FloatingCTA, never minimized
         "md:bottom-8 md:right-24 md:left-auto md:top-auto",
         // Mobile default: bottom-left
         !shifted && "bottom-4 left-4",
@@ -80,13 +83,36 @@ const VapiWidget = () => {
         shifted && "top-20 right-4 left-auto bottom-auto"
       )}
     >
-      <vapi-widget
-        public-key="7fec7065-5cbf-4ef1-8f9d-6b7248788805"
-        assistant-id="2a2b328e-326d-4164-9494-08b731f33539"
-        mode="chat"
-        size="compact"
-        theme="light"
-      />
+      {/* Minimized bubble — mobile only */}
+      {minimized && (
+        <button
+          type="button"
+          onClick={() => setMinimized(false)}
+          aria-label="Open chat assistant"
+          className="md:hidden flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg ring-2 ring-background transition-transform active:scale-95"
+        >
+          <Bot className="h-5 w-5" />
+        </button>
+      )}
+
+      {/* Full widget + minimize control */}
+      <div className={cn("relative", minimized && "hidden md:block")}>
+        <button
+          type="button"
+          onClick={() => setMinimized(true)}
+          aria-label="Minimize chat assistant"
+          className="md:hidden absolute -top-2 -right-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-foreground text-background shadow-md ring-2 ring-background transition-transform active:scale-95"
+        >
+          <Minus className="h-3.5 w-3.5" />
+        </button>
+        <vapi-widget
+          public-key="7fec7065-5cbf-4ef1-8f9d-6b7248788805"
+          assistant-id="2a2b328e-326d-4164-9494-08b731f33539"
+          mode="chat"
+          size="compact"
+          theme="light"
+        />
+      </div>
     </div>
   );
 };
