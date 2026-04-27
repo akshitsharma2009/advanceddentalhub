@@ -95,33 +95,47 @@ const Appointment = () => {
           <div className="mx-auto max-w-3xl text-center">
             <p className="mb-2 text-sm font-medium uppercase tracking-[0.2em] text-primary">Schedule A Visit</p>
             <h1 className="font-display text-4xl font-bold text-foreground md:text-5xl">
-              Book Your <span className="text-primary">Free Consultation</span>
+              {step === "confirmed" ? (
+                <>You're <span className="text-primary">All Set!</span></>
+              ) : (
+                <>Book Your <span className="text-primary">Free Consultation</span></>
+              )}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-              {step === "form"
-                ? "Fill in your details and we'll help you pick the perfect time slot."
-                : "Choose a convenient date and time for your consultation."}
+              {step === "form" && "Fill in your details and we'll help you pick the perfect time slot."}
+              {step === "calendly" && "Choose a convenient date and time for your consultation."}
+              {step === "confirmed" && "Your appointment has been booked successfully. We can't wait to see you!"}
             </p>
 
             {/* Step indicator */}
-            <div className="mx-auto mt-8 flex max-w-xs items-center justify-center gap-3">
+            <div className="mx-auto mt-8 flex max-w-md items-center justify-center gap-3">
               <div className={cn(
                 "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
                 step === "form" ? "bg-primary text-primary-foreground" : "bg-primary/20 text-primary"
               )}>
-                1
+                {step === "form" ? "1" : <CheckCircle2 className="h-4 w-4" />}
               </div>
-              <div className={cn("h-0.5 flex-1 rounded-full transition-colors", step === "calendly" ? "bg-primary" : "bg-border")} />
+              <div className={cn("h-0.5 flex-1 rounded-full transition-colors", step !== "form" ? "bg-primary" : "bg-border")} />
               <div className={cn(
                 "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
-                step === "calendly" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+                step === "calendly" ? "bg-primary text-primary-foreground"
+                  : step === "confirmed" ? "bg-primary/20 text-primary"
+                  : "bg-muted text-muted-foreground"
               )}>
-                2
+                {step === "confirmed" ? <CheckCircle2 className="h-4 w-4" /> : "2"}
+              </div>
+              <div className={cn("h-0.5 flex-1 rounded-full transition-colors", step === "confirmed" ? "bg-primary" : "bg-border")} />
+              <div className={cn(
+                "flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors",
+                step === "confirmed" ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"
+              )}>
+                3
               </div>
             </div>
-            <div className="mx-auto mt-2 flex max-w-xs justify-between">
+            <div className="mx-auto mt-2 flex max-w-md justify-between">
               <span className={cn("text-xs font-medium", step === "form" ? "text-primary" : "text-muted-foreground")}>Your Info</span>
               <span className={cn("text-xs font-medium", step === "calendly" ? "text-primary" : "text-muted-foreground")}>Pick a Time</span>
+              <span className={cn("text-xs font-medium", step === "confirmed" ? "text-primary" : "text-muted-foreground")}>Confirmed</span>
             </div>
           </div>
         </div>
