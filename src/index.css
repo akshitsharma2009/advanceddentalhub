@@ -160,3 +160,10 @@
     text-wrap: balance;
   }
 }
+
+/* Vapi widget: keep the host element inline so the wrapper controls position.
+   Shadow DOM internals (popup panel, etc.) are untouched. */
+.vapi-widget-wrapper > vapi-widget {
+  position: static !important;
+  display: inline-block;
+}
