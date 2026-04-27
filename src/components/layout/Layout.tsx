@@ -14,6 +14,13 @@ const Layout = ({ children }: LayoutProps) => {
       <main className="flex-1">{children}</main>
       <Footer />
       <FloatingCTA />
+      <vapi-widget
+        public-key="7fec7065-5cbf-4ef1-8f9d-6b7248788805"
+        assistant-id="2a2b328e-326d-4164-9494-08b731f33539"
+        mode="chat"
+        size="compact"
+        theme="light"
+      />
     </div>
   );
 };
