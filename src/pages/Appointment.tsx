@@ -111,7 +111,8 @@ const Appointment = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.purpose)}`;
+  const purposeWithRef = referenceId ? `[Ref: ${referenceId}] ${formData.purpose}` : formData.purpose;
+  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(purposeWithRef)}`;
 
   return (
     <Layout>
