@@ -96,13 +96,17 @@ const Appointment = () => {
       return;
     }
     setErrors({});
+    const ref = generateReferenceId();
+    setReferenceId(ref);
+    try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
     setStep("calendly");
-    toast({ title: "Great! Now pick a time", description: "Choose a convenient slot on the calendar below." });
+    toast({ title: "Great! Now pick a time", description: `Your reference ID is ${ref}` });
   };
 
   const handleBookAnother = () => {
     setFormData({ name: "", dob: undefined, phone: "", email: "", purpose: "" });
     setErrors({});
+    setReferenceId("");
     setStep("form");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
