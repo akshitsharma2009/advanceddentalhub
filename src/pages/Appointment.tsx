@@ -43,6 +43,26 @@ const Appointment = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [bookedAt, setBookedAt] = useState<Date>(new Date());
+  const [referenceId, setReferenceId] = useState<string>("");
+  const [copied, setCopied] = useState(false);
+
+  const generateReferenceId = () => {
+    const d = new Date();
+    const ymd = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `ADH-${ymd}-${rand}`;
+  };
+
+  const copyReference = async () => {
+    try {
+      await navigator.clipboard.writeText(referenceId);
+      setCopied(true);
+      toast({ title: "Reference ID copied", description: referenceId });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({ title: "Couldn't copy", description: "Please copy the ID manually.", variant: "destructive" });
+    }
+  };
 
   // Listen for Calendly booking confirmation via postMessage
   useEffect(() => {
