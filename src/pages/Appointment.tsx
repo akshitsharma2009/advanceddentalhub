@@ -329,6 +329,28 @@ const Appointment = () => {
                   </div>
                 </div>
 
+                {/* Reference ID banner */}
+                {referenceId && (
+                  <div className="glass-card-static mb-6 flex flex-wrap items-center justify-between gap-3 !py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+                        <Hash className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-muted-foreground">Your reference ID</p>
+                        <p className="font-mono text-base font-semibold text-foreground">{referenceId}</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={copyReference} className="gap-2">
+                      {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied ? "Copied" : "Copy"}
+                    </Button>
+                    <p className="w-full text-xs text-muted-foreground">
+                      Save this ID — mention it in any call, email, or chat with our team for faster follow-up.
+                    </p>
+                  </div>
+                )}
+
                 {/* Lead submission status */}
                 <div className="glass-card-static mb-6 overflow-hidden !p-0">
                   <div className="flex items-center gap-3 border-b border-border/50 bg-primary/5 px-5 py-3">
