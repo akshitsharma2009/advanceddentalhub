@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar as CalendarIcon, CheckCircle, CheckCircle2, Phone, Mail, ArrowLeft, User, Cake, Home, Clock, MapPin, Bell, Bot } from "lucide-react";
+import { Calendar as CalendarIcon, CheckCircle, CheckCircle2, Phone, Mail, ArrowLeft, User, Cake, Home, Clock, MapPin, Bell, Bot, Hash, Copy, Check } from "lucide-react";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { MetalButton } from "@/components/ui/liquid-glass-button";
@@ -43,6 +43,26 @@ const Appointment = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [bookedAt, setBookedAt] = useState<Date>(new Date());
+  const [referenceId, setReferenceId] = useState<string>("");
+  const [copied, setCopied] = useState(false);
+
+  const generateReferenceId = () => {
+    const d = new Date();
+    const ymd = `${d.getFullYear()}${String(d.getMonth() + 1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+    const rand = Math.random().toString(36).slice(2, 7).toUpperCase();
+    return `ADH-${ymd}-${rand}`;
+  };
+
+  const copyReference = async () => {
+    try {
+      await navigator.clipboard.writeText(referenceId);
+      setCopied(true);
+      toast({ title: "Reference ID copied", description: referenceId });
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast({ title: "Couldn't copy", description: "Please copy the ID manually.", variant: "destructive" });
+    }
+  };
 
   // Listen for Calendly booking confirmation via postMessage
   useEffect(() => {
@@ -76,18 +96,23 @@ const Appointment = () => {
       return;
     }
     setErrors({});
+    const ref = generateReferenceId();
+    setReferenceId(ref);
+    try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
     setStep("calendly");
-    toast({ title: "Great! Now pick a time", description: "Choose a convenient slot on the calendar below." });
+    toast({ title: "Great! Now pick a time", description: `Your reference ID is ${ref}` });
   };
 
   const handleBookAnother = () => {
     setFormData({ name: "", dob: undefined, phone: "", email: "", purpose: "" });
     setErrors({});
+    setReferenceId("");
     setStep("form");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(formData.purpose)}`;
+  const purposeWithRef = referenceId ? `[Ref: ${referenceId}] ${formData.purpose}` : formData.purpose;
+  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(purposeWithRef)}`;
 
   return (
     <Layout>
@@ -304,6 +329,28 @@ const Appointment = () => {
                   </div>
                 </div>
 
+                {/* Reference ID banner */}
+                {referenceId && (
+                  <div className="glass-card-static mb-6 flex flex-wrap items-center justify-between gap-3 !py-4">
+                    <div className="flex items-center gap-3">
+                      <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+                        <Hash className="h-4 w-4 text-primary" />
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-muted-foreground">Your reference ID</p>
+                        <p className="font-mono text-base font-semibold text-foreground">{referenceId}</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" size="sm" onClick={copyReference} className="gap-2">
+                      {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied ? "Copied" : "Copy"}
+                    </Button>
+                    <p className="w-full text-xs text-muted-foreground">
+                      Save this ID — mention it in any call, email, or chat with our team for faster follow-up.
+                    </p>
+                  </div>
+                )}
+
                 {/* Lead submission status */}
                 <div className="glass-card-static mb-6 overflow-hidden !p-0">
                   <div className="flex items-center gap-3 border-b border-border/50 bg-primary/5 px-5 py-3">
@@ -396,6 +443,25 @@ const Appointment = () => {
 
                   {/* Details */}
                   <div className="space-y-6 px-6 py-8 md:px-10">
+                    {referenceId && (
+                      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/5 p-4">
+                        <div className="flex items-center gap-3">
+                          <Hash className="h-5 w-5 text-primary" />
+                          <div>
+                            <p className="text-xs uppercase tracking-wider text-muted-foreground">Reference ID</p>
+                            <p className="font-mono text-lg font-semibold text-foreground">{referenceId}</p>
+                          </div>
+                        </div>
+                        <Button variant="outline" size="sm" onClick={copyReference} className="gap-2">
+                          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                          {copied ? "Copied" : "Copy ID"}
+                        </Button>
+                        <p className="w-full text-xs text-muted-foreground">
+                          Please quote this ID in any email, call, or chat about your appointment.
+                        </p>
+                      </div>
+                    )}
+
                     <div>
                       <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Booking Details</h3>
                       <div className="grid gap-3 sm:grid-cols-2">
