@@ -443,6 +443,25 @@ const Appointment = () => {
 
                   {/* Details */}
                   <div className="space-y-6 px-6 py-8 md:px-10">
+                    {referenceId && (
+                      <div className="flex flex-wrap items-center justify-between gap-3 rounded-xl border border-primary/30 bg-primary/5 p-4">
+                        <div className="flex items-center gap-3">
+                          <Hash className="h-5 w-5 text-primary" />
+                          <div>
+                            <p className="text-xs uppercase tracking-wider text-muted-foreground">Reference ID</p>
+                            <p className="font-mono text-lg font-semibold text-foreground">{referenceId}</p>
+                          </div>
+                        </div>
+                        <Button variant="outline" size="sm" onClick={copyReference} className="gap-2">
+                          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                          {copied ? "Copied" : "Copy ID"}
+                        </Button>
+                        <p className="w-full text-xs text-muted-foreground">
+                          Please quote this ID in any email, call, or chat about your appointment.
+                        </p>
+                      </div>
+                    )}
+
                     <div>
                       <h3 className="mb-3 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Booking Details</h3>
                       <div className="grid gap-3 sm:grid-cols-2">
