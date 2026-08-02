@@ -128,11 +128,13 @@ const Contact = () => {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="subject">Subject</Label>
-                    <Input id="subject" placeholder="How can we help?" value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} />
+                    <Input id="subject" placeholder="How can we help?" maxLength={200} value={formData.subject} onChange={(e) => setFormData({ ...formData, subject: e.target.value })} />
+                    {errors.subject && <p className="text-sm text-destructive">{errors.subject}</p>}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="message">Message *</Label>
-                    <Textarea id="message" placeholder="Write your message here..." rows={5} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required />
+                    <Textarea id="message" placeholder="Write your message here..." rows={5} maxLength={2000} value={formData.message} onChange={(e) => setFormData({ ...formData, message: e.target.value })} required />
+                    {errors.message && <p className="text-sm text-destructive">{errors.message}</p>}
                   </div>
                   <Button type="submit" size="lg" className="w-full gap-2 rounded-full">
                     <Send className="h-4 w-4" />
