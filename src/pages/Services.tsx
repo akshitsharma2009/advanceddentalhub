@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { ArrowRight, CheckCircle } from "lucide-react";
 import OptimizedImage from "@/components/ui/optimized-image";
+import SEO from "@/components/SEO";
 
 const services = [
   { title: "General Dentistry", image: "/images/services/general-dentistry.jpg", description: "Comprehensive oral health care including routine check-ups, cleanings, fillings, and preventive treatments to maintain your dental health.", benefits: ["Regular check-ups & cleanings", "Cavity fillings", "Preventive care", "Oral health education"] },
@@ -19,6 +20,7 @@ const services = [
 const Services = () => {
   return (
     <Layout>
+      <SEO title={"Dental Services | Advanced Dental Hub"} description={"General dentistry, root canals, implants, braces, cosmetic dentistry, whitening, gum care and pediatric dentistry — all under one roof."} path="/services" />
       {/* Hero Section */}
       <section className="floating-section bg-gradient-to-br from-secondary/50 via-background to-accent/20 py-16 md:py-24">
         <div className="container relative z-10">

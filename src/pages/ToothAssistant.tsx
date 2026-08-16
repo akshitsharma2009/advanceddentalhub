@@ -1,10 +1,12 @@
 import Layout from "@/components/layout/Layout";
 import DentalAssistant from "@/components/dental-assistant/DentalAssistant";
 import { Bot } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const ToothAssistant = () => {
   return (
     <Layout>
+      <SEO title={"Tooth Care Assistant | Advanced Dental Hub"} description={"Describe your dental concern and get instant guidance with safe home-care tips from our Tooth Care Assistant."} path="/tooth-assistant" />
       <section className="py-12 md:py-16">
         <div className="container">
           <div className="mx-auto max-w-2xl text-center mb-8">
