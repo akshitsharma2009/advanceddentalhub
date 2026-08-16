@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { MapPin, Phone, Mail, Clock, MessageCircle, Send } from "lucide-react";
 import { z } from "zod";
+import SEO from "@/components/SEO";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -39,6 +40,7 @@ const Contact = () => {
 
   return (
     <Layout>
+      <SEO title={"Contact Us | Advanced Dental Hub"} description={"Call, email or visit Advanced Dental Hub. Find our address, opening hours and send us a message."} path="/contact" />
       {/* Hero Section */}
       <section className="floating-section bg-gradient-to-br from-secondary/50 via-background to-accent/20 py-16 md:py-24">
         <div className="container relative z-10">

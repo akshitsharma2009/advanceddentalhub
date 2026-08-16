@@ -14,6 +14,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import SEO from "@/components/SEO";
 
 const appointmentSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -116,6 +117,7 @@ const Appointment = () => {
 
   return (
     <Layout>
+      <SEO title={"Book an Appointment | Advanced Dental Hub"} description={"Share your details and pick a time slot online. Painless, precise dental care Monday to Saturday, 9 AM to 7 PM."} path="/appointment" />
       {/* Hero Section */}
       <section className="floating-section bg-gradient-to-br from-secondary/50 via-background to-accent/20 py-16 md:py-24">
         <div className="container relative z-10">

@@ -1,5 +1,6 @@
 import Layout from "@/components/layout/Layout";
 import { Award, GraduationCap, Clock, Heart, CheckCircle, Users } from "lucide-react";
+import SEO from "@/components/SEO";
 
 const specializations = [
   "Root Canal Treatment",
@@ -13,6 +14,7 @@ const specializations = [
 const About = () => {
   return (
     <Layout>
+      <SEO title={"About Our Dentist | Advanced Dental Hub"} description={"Meet the team behind Advanced Dental Hub — 15+ years of experience in endodontics, implants, orthodontics and cosmetic dentistry."} path="/about" />
       {/* Hero Section */}
       <section className="floating-section bg-gradient-to-br from-secondary/50 via-background to-accent/20 py-16 md:py-24">
         <div className="container relative z-10">
