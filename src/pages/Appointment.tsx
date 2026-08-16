@@ -84,7 +84,9 @@ const Appointment = () => {
     return () => window.removeEventListener("message", handler);
   }, [toast]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = appointmentSchema.safeParse(formData);
     if (!result.success) {
@@ -98,11 +100,26 @@ const Appointment = () => {
     }
     setErrors({});
     const ref = generateReferenceId();
+    setSubmitting(true);
+    const { error } = await supabase.from("consultation_leads").insert({
+      reference_id: ref,
+      name: result.data.name,
+      dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : null,
+      phone: result.data.phone,
+      email: result.data.email,
+      purpose: result.data.purpose,
+    });
+    setSubmitting(false);
+    if (error) {
+      toast({ title: "Could not submit", description: "Please try again in a moment.", variant: "destructive" });
+      return;
+    }
     setReferenceId(ref);
     try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
     setStep("calendly");
     toast({ title: "Great! Now pick a time", description: `Your reference ID is ${ref}` });
   };
+
 
   const handleBookAnother = () => {
     setFormData({ name: "", dob: undefined, phone: "", email: "", purpose: "" });
