@@ -33,20 +33,24 @@ type FormData = {
   purpose: string;
 };
 
+const emptyFormData: FormData = {
+  name: "",
+  dob: undefined,
+  phone: "",
+  email: "",
+  purpose: "",
+};
+
 const Appointment = () => {
   const { toast } = useToast();
   const [step, setStep] = useState<"form" | "calendly" | "confirmed">("form");
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    dob: undefined,
-    phone: "",
-    email: "",
-    purpose: "",
-  });
+  const [formData, setFormData] = useState<FormData>({ ...emptyFormData });
+  const [submittedData, setSubmittedData] = useState<FormData>({ ...emptyFormData });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [bookedAt, setBookedAt] = useState<Date>(new Date());
   const [referenceId, setReferenceId] = useState<string>("");
   const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const generateReferenceId = () => {
     const d = new Date();
