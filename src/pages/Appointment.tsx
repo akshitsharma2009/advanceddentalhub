@@ -374,17 +374,17 @@ const Appointment = () => {
                   <div className="flex items-center gap-2 text-sm">
                     <User className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Name:</span>
-                    <span className="font-medium text-foreground">{formData.name}</span>
+                    <span className="font-medium text-foreground">{submittedData.name}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Mail className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Email:</span>
-                    <span className="font-medium text-foreground">{formData.email}</span>
+                    <span className="font-medium text-foreground">{submittedData.email}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Phone className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Phone:</span>
-                    <span className="font-medium text-foreground">{formData.phone}</span>
+                    <span className="font-medium text-foreground">{submittedData.phone}</span>
                   </div>
                 </div>
 
