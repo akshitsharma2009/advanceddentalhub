@@ -343,8 +343,8 @@ const Appointment = () => {
                     </div>
 
                     <div data-vapi-avoid>
-                      <MetalButton variant="primary" className="w-full">
-                        Continue to Schedule →
+                      <MetalButton variant="primary" className="w-full" disabled={submitting}>
+                        {submitting ? "Sending..." : "Continue to Schedule →"}
                       </MetalButton>
                     </div>
                   </form>
