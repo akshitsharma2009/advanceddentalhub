@@ -33,20 +33,24 @@ type FormData = {
   purpose: string;
 };
 
+const emptyFormData: FormData = {
+  name: "",
+  dob: undefined,
+  phone: "",
+  email: "",
+  purpose: "",
+};
+
 const Appointment = () => {
   const { toast } = useToast();
   const [step, setStep] = useState<"form" | "calendly" | "confirmed">("form");
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    dob: undefined,
-    phone: "",
-    email: "",
-    purpose: "",
-  });
+  const [formData, setFormData] = useState<FormData>({ ...emptyFormData });
+  const [submittedData, setSubmittedData] = useState<FormData>({ ...emptyFormData });
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [bookedAt, setBookedAt] = useState<Date>(new Date());
   const [referenceId, setReferenceId] = useState<string>("");
   const [copied, setCopied] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const generateReferenceId = () => {
     const d = new Date();
@@ -85,8 +89,6 @@ const Appointment = () => {
     return () => window.removeEventListener("message", handler);
   }, [toast]);
 
-  const [submitting, setSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = appointmentSchema.safeParse(formData);
@@ -102,6 +104,37 @@ const Appointment = () => {
     setErrors({});
     const ref = generateReferenceId();
     setSubmitting(true);
+
+    try {
+      const web3Response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "b4c0b0aa-bbe7-4ee6-b80d-c1b19282e139",
+          subject: "New Consultation Concern Submitted",
+          from_name: "Consultation Form",
+          name: result.data.name,
+          email: result.data.email,
+          phone: result.data.phone,
+          dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : "",
+          purpose: result.data.purpose,
+          concern: result.data.purpose,
+          reference_id: ref,
+        }),
+      });
+      const web3Data = await web3Response.json();
+      if (!web3Data.success) {
+        throw new Error(web3Data.message || "Email submission failed");
+      }
+    } catch {
+      setSubmitting(false);
+      toast({ title: "Could not send your request", description: "Please check your connection and try again.", variant: "destructive" });
+      return;
+    }
+
     const { error } = await supabase.from("consultation_leads").insert({
       reference_id: ref,
       name: result.data.name,
@@ -110,28 +143,34 @@ const Appointment = () => {
       email: result.data.email,
       purpose: result.data.purpose,
     });
-    setSubmitting(false);
+
     if (error) {
-      toast({ title: "Could not submit", description: "Please try again in a moment.", variant: "destructive" });
+      setSubmitting(false);
+      toast({ title: "Could not save your details", description: "Please try again in a moment.", variant: "destructive" });
       return;
     }
+
     setReferenceId(ref);
+    setSubmittedData({ ...formData });
+    setFormData({ ...emptyFormData });
     try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
     setStep("calendly");
-    toast({ title: "Great! Now pick a time", description: `Your reference ID is ${ref}` });
+    setSubmitting(false);
+    toast({ title: "Thank you! Your consultation request has been received.", description: `Your reference ID is ${ref}` });
   };
 
 
   const handleBookAnother = () => {
-    setFormData({ name: "", dob: undefined, phone: "", email: "", purpose: "" });
+    setFormData({ ...emptyFormData });
+    setSubmittedData({ ...emptyFormData });
     setErrors({});
     setReferenceId("");
     setStep("form");
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const purposeWithRef = referenceId ? `[Ref: ${referenceId}] ${formData.purpose}` : formData.purpose;
-  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(formData.name)}&email=${encodeURIComponent(formData.email)}&a1=${encodeURIComponent(formData.phone)}&a2=${encodeURIComponent(purposeWithRef)}`;
+  const purposeWithRef = referenceId ? `[Ref: ${referenceId}] ${submittedData.purpose}` : submittedData.purpose;
+  const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(submittedData.name)}&email=${encodeURIComponent(submittedData.email)}&a1=${encodeURIComponent(submittedData.phone)}&a2=${encodeURIComponent(purposeWithRef)}`;
 
   return (
     <Layout>
@@ -304,8 +343,8 @@ const Appointment = () => {
                     </div>
 
                     <div data-vapi-avoid>
-                      <MetalButton variant="primary" className="w-full">
-                        Continue to Schedule →
+                      <MetalButton variant="primary" className="w-full" disabled={submitting}>
+                        {submitting ? "Sending..." : "Continue to Schedule →"}
                       </MetalButton>
                     </div>
                   </form>
@@ -335,17 +374,17 @@ const Appointment = () => {
                   <div className="flex items-center gap-2 text-sm">
                     <User className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Name:</span>
-                    <span className="font-medium text-foreground">{formData.name}</span>
+                    <span className="font-medium text-foreground">{submittedData.name}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Mail className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Email:</span>
-                    <span className="font-medium text-foreground">{formData.email}</span>
+                    <span className="font-medium text-foreground">{submittedData.email}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <Phone className="h-4 w-4 text-primary" />
                     <span className="text-muted-foreground">Phone:</span>
-                    <span className="font-medium text-foreground">{formData.phone}</span>
+                    <span className="font-medium text-foreground">{submittedData.phone}</span>
                   </div>
                 </div>
 
@@ -457,7 +496,7 @@ const Appointment = () => {
                       Appointment Confirmed!
                     </h2>
                     <p className="mt-2 text-muted-foreground">
-                      Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. Your free consultation is booked.
+                      Thank you, <span className="font-semibold text-foreground">{submittedData.name}</span>. Your free consultation is booked.
                     </p>
                   </div>
 
@@ -489,21 +528,21 @@ const Appointment = () => {
                           <User className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Name</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.name}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.name}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
                           <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Email</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.email}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.email}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
                           <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Phone</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.phone}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.phone}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
