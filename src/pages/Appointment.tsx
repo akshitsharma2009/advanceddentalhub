@@ -89,8 +89,6 @@ const Appointment = () => {
     return () => window.removeEventListener("message", handler);
   }, [toast]);
 
-  const [submitting, setSubmitting] = useState(false);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const result = appointmentSchema.safeParse(formData);
@@ -106,6 +104,37 @@ const Appointment = () => {
     setErrors({});
     const ref = generateReferenceId();
     setSubmitting(true);
+
+    try {
+      const web3Response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: "b4c0b0aa-bbe7-4ee6-b80d-c1b19282e139",
+          subject: "New Consultation Concern Submitted",
+          from_name: "Consultation Form",
+          name: result.data.name,
+          email: result.data.email,
+          phone: result.data.phone,
+          dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : "",
+          purpose: result.data.purpose,
+          concern: result.data.purpose,
+          reference_id: ref,
+        }),
+      });
+      const web3Data = await web3Response.json();
+      if (!web3Data.success) {
+        throw new Error(web3Data.message || "Email submission failed");
+      }
+    } catch {
+      setSubmitting(false);
+      toast({ title: "Could not send your request", description: "Please check your connection and try again.", variant: "destructive" });
+      return;
+    }
+
     const { error } = await supabase.from("consultation_leads").insert({
       reference_id: ref,
       name: result.data.name,
@@ -114,15 +143,20 @@ const Appointment = () => {
       email: result.data.email,
       purpose: result.data.purpose,
     });
-    setSubmitting(false);
+
     if (error) {
-      toast({ title: "Could not submit", description: "Please try again in a moment.", variant: "destructive" });
+      setSubmitting(false);
+      toast({ title: "Could not save your details", description: "Please try again in a moment.", variant: "destructive" });
       return;
     }
+
     setReferenceId(ref);
+    setSubmittedData({ ...formData });
+    setFormData({ ...emptyFormData });
     try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
     setStep("calendly");
-    toast({ title: "Great! Now pick a time", description: `Your reference ID is ${ref}` });
+    setSubmitting(false);
+    toast({ title: "Thank you! Your consultation request has been received.", description: `Your reference ID is ${ref}` });
   };
 
 
