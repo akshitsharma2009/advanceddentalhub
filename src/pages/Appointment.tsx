@@ -496,7 +496,7 @@ const Appointment = () => {
                       Appointment Confirmed!
                     </h2>
                     <p className="mt-2 text-muted-foreground">
-                      Thank you, <span className="font-semibold text-foreground">{formData.name}</span>. Your free consultation is booked.
+                      Thank you, <span className="font-semibold text-foreground">{submittedData.name}</span>. Your free consultation is booked.
                     </p>
                   </div>
 
@@ -528,21 +528,21 @@ const Appointment = () => {
                           <User className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Name</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.name}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.name}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
                           <Mail className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Email</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.email}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.email}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
                           <Phone className="mt-0.5 h-4 w-4 shrink-0 text-primary" />
                           <div className="min-w-0">
                             <p className="text-xs text-muted-foreground">Phone</p>
-                            <p className="truncate text-sm font-medium text-foreground">{formData.phone}</p>
+                            <p className="truncate text-sm font-medium text-foreground">{submittedData.phone}</p>
                           </div>
                         </div>
                         <div className="flex items-start gap-3 rounded-xl border border-border/50 bg-background/50 p-3">
