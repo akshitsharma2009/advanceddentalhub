@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
 import { Button } from "@/components/ui/button";
@@ -9,13 +9,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Calendar as CalendarIcon, CheckCircle, CheckCircle2, Phone, Mail, ArrowLeft, User, Cake, Home, Clock, MapPin, Bell, Bot, Hash, Copy, Check } from "lucide-react";
 import { z } from "zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { MetalButton } from "@/components/ui/liquid-glass-button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import SEO from "@/components/SEO";
 import { supabase } from "@/integrations/supabase/client";
+import { initializeCalendlyInline } from "@/lib/calendly";
 
 const appointmentSchema = z.object({
   name: z.string().trim().min(1, "Name is required").max(100, "Name must be less than 100 characters"),
@@ -51,6 +51,7 @@ const Appointment = () => {
   const [referenceId, setReferenceId] = useState<string>("");
   const [copied, setCopied] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const calendlyContainerRef = useRef<HTMLDivElement>(null);
 
   const generateReferenceId = () => {
     const d = new Date();
@@ -113,7 +114,7 @@ const Appointment = () => {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: "b4c0b0aa-bbe7-4ee6-b80d-c1b19282e139",
+          access_key: "666896e4-bfd5-4a3b-9d16-f002ffe98490",
           subject: "New Consultation Concern Submitted",
           from_name: "Consultation Form",
           name: result.data.name,
@@ -135,28 +136,32 @@ const Appointment = () => {
       return;
     }
 
-    const { error } = await supabase.from("consultation_leads").insert({
-      reference_id: ref,
-      name: result.data.name,
-      dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : null,
-      phone: result.data.phone,
-      email: result.data.email,
-      purpose: result.data.purpose,
-    });
+    try {
+      try {
+        const { error } = await supabase.from("consultation_leads").insert({
+          reference_id: ref,
+          name: result.data.name,
+          dob: formData.dob ? format(formData.dob, "yyyy-MM-dd") : null,
+          phone: result.data.phone,
+          email: result.data.email,
+          purpose: result.data.purpose,
+        });
+        if (error) console.warn("Supabase insert failed:", error.message);
+      } catch (dbErr) {
+        console.warn("Supabase insert threw:", dbErr);
+      }
 
-    if (error) {
+      setReferenceId(ref);
+      setSubmittedData({ ...formData });
+      setFormData({ ...emptyFormData });
+      try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
+      setStep("calendly");
+      toast({ title: "Thank you! Your consultation request has been received.", description: `Your reference ID is ${ref}` });
+    } catch {
+      toast({ title: "Something went wrong", description: "Please try again.", variant: "destructive" });
+    } finally {
       setSubmitting(false);
-      toast({ title: "Could not save your details", description: "Please try again in a moment.", variant: "destructive" });
-      return;
     }
-
-    setReferenceId(ref);
-    setSubmittedData({ ...formData });
-    setFormData({ ...emptyFormData });
-    try { sessionStorage.setItem("adh_booking_ref", ref); } catch { /* ignore */ }
-    setStep("calendly");
-    setSubmitting(false);
-    toast({ title: "Thank you! Your consultation request has been received.", description: `Your reference ID is ${ref}` });
   };
 
 
@@ -171,6 +176,12 @@ const Appointment = () => {
 
   const purposeWithRef = referenceId ? `[Ref: ${referenceId}] ${submittedData.purpose}` : submittedData.purpose;
   const calendlyUrl = `https://calendly.com/akshitsharmayt-2/new-meeting?name=${encodeURIComponent(submittedData.name)}&email=${encodeURIComponent(submittedData.email)}&a1=${encodeURIComponent(submittedData.phone)}&a2=${encodeURIComponent(purposeWithRef)}`;
+
+  useEffect(() => {
+    if (step !== "calendly" || !calendlyContainerRef.current) return;
+    const container = calendlyContainerRef.current;
+    initializeCalendlyInline(calendlyUrl, container).catch(() => undefined);
+  }, [step, calendlyUrl]);
 
   return (
     <Layout>
@@ -343,9 +354,9 @@ const Appointment = () => {
                     </div>
 
                     <div data-vapi-avoid>
-                      <MetalButton variant="primary" className="w-full" disabled={submitting}>
+                      <Button type="submit" className="w-full" size="lg" disabled={submitting}>
                         {submitting ? "Sending..." : "Continue to Schedule →"}
-                      </MetalButton>
+                      </Button>
                     </div>
                   </form>
                 </div>
@@ -461,14 +472,10 @@ const Appointment = () => {
 
                 {/* Calendly embed */}
                 <div data-vapi-avoid className="overflow-hidden rounded-2xl border border-border/50 bg-background shadow-sm">
-                  <iframe
-                    src={calendlyUrl}
-                    width="100%"
-                    height="700"
-                    frameBorder="0"
-                    title="Schedule a consultation"
-                    className="w-full"
-                  />
+                  <div ref={calendlyContainerRef} className="min-h-[720px] w-full" />
+                  <div className="border-t border-border/50 px-5 py-4 text-center text-sm text-muted-foreground">
+                    If the scheduler does not appear, <a href={calendlyUrl} target="_blank" rel="noreferrer" className="font-medium text-primary underline-offset-2 hover:underline">open Calendly in a new tab</a>.
+                  </div>
                 </div>
               </motion.div>
             )}
